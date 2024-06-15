@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   AppBar,
-  Button,
   Container,
   Tab,
   Tabs,
@@ -10,55 +9,94 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
-import DrawerComp from "./Drawer";
-import LeftDrawer from "./Drawer";
 import RightDrawer from "./Drawer";
+import CartIcon from "./CartIcon";
+import PersonIcon from "@mui/icons-material/Person";
 const Header = () => {
-  const [value, setValue] = useState();
-  const pages = ['Home', 'Everything', 'About Us', 'Contact Us'];
+  const [pageValue, setPageValue] = useState();
+  const [subpageValue, setSubpageValue] = useState();
+  const pages = ["Home", "Everything"];
+  const subPages = ["About Us", "Contact Us"];
   const theme = useTheme();
-  console.log(theme);
+  // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMatch);
+  // console.log(isMatch);
 
   return (
     <React.Fragment>
-      <AppBar sx={{ position:"sticky",backgroundColor: "inherit" , color:"inherit"}}>
-        <Container sx={{ marginLeft: "auto" }}
-        >
-        <Toolbar disableGutters>
-          <AddBusinessRoundedIcon sx={{ transform: "scale(2)" }} />
-          {isMatch ? (
-            <>
-              <Typography sx={{ fontSize: "2rem", paddingLeft: "10%",margin: "auto" }}>
-                Biggest
-              </Typography>
-              <RightDrawer />
-            </>
-          ) : (
-            <>
-              <Tabs
-                sx={{ marginLeft: "auto" }}
-                indicatorColor="secondary"
-                textColor="inherit"
-                value={value}
-                onChange={(e, value) => setValue(value)}
-              >
-                {pages.map((page,key)=>(
-                  <Tab key={key} label={page} />
+      <AppBar
+        sx={{
+          position: "sticky",
+          backgroundColor: "inherit",
+          color: "inherit",
+        }}
+      >
+        <Container>
+          <Toolbar
+            sx={{ display: "flex", justifyContent: "space-between" }}
+            disableGutters
+          >
+            <Typography
+              sx={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                fontFamily: "Times New Roman",
+              }}
+            >
+              Biggest
+            </Typography>
 
-                ))}
-              </Tabs>
-              <Button sx={{ marginLeft: "auto" }} variant="contained">
-                Login
-              </Button>
-              <Button sx={{ marginLeft: "10px" }} variant="contained">
-                SignUp
-              </Button>
-            </>
-          )}
-        </Toolbar>
+            {isMatch ? (
+              <></>
+            ) : (
+              <>
+                <Tabs
+                  indicatorColor="secondary"
+                  textColor="black"
+                  value={pageValue}
+                  onChange={(e, value) => setPageValue(value)}
+                >
+                  {pages.map((page, key) => (
+                    <Tab key={key} label={page} />
+                  ))}
+                </Tabs>
+              </>
+            )}
+            {isMatch ? (
+              <>
+                <div
+                  style={{
+                    marginLeft: "auto",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    marginRight: "10px",
+                  }}
+                >
+                  <CartIcon />
+                  <PersonIcon />
+                </div>
+
+                <RightDrawer />
+              </>
+            ) : (
+              <>
+                <Tabs
+                  sx={{ marginLeft: "auto" }}
+                  indicatorColor="secondary"
+                  textColor="black"
+                  value={subpageValue}
+                  onChange={(e, value) => setSubpageValue(value)}
+                >
+                  {subPages.map((page, key) => (
+                    <Tab key={key} label={page} />
+                  ))}
+                </Tabs>
+                <CartIcon />
+                <PersonIcon />
+              </>
+            )}
+          </Toolbar>
         </Container>
       </AppBar>
     </React.Fragment>

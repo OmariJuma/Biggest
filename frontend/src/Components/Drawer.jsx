@@ -26,7 +26,7 @@ export default function RightDrawer() {
             {pages.map((page, index) => (
               <ListItemButton key={index}>
                 <ListItemIcon>
-                  <ListItemText sx={{color:"inherit"}}>{page}</ListItemText>
+                  <ListItemText sx={{color:"black"}}>{page}</ListItemText>
                 </ListItemIcon>
               </ListItemButton>
             ))}
