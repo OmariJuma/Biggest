@@ -1,0 +1,3 @@
+# This is the backend code for biggest.com.ng
+## All the configurations needed to run this code should be explained here
+### To run this code, type this in your terminal "cd backend" then run "npm install" then "npm start"
