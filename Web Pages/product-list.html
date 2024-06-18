@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <header>
+  <header class="white">
     <div class="header-container container-xl">
-      <h1 class="logo">BIGGEST</h1>
+      <h1 class="logo-name">BIGGEST</h1>
       <nav>
         <ul class="nav-links">
           <li><a href="#">Everything</a></li>
@@ -29,78 +29,118 @@
       </div>
     </div>
   </header>
+    <main class="container my-4">
+        <div class="row" style="margin-top: 100px;">
+            <aside class="col-md-3">
+    <div class="filter-container mb-4">
+        <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search products...">
+            <button class="btn btn-search"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="price-filter">
+            <label for="priceRange">Filter by Price</label>
+            <input type="range" class="form-control-range" id="priceRange" min="0" max="500" step="10" value="250" oninput="updatePriceLabel(this.value)">
+            <div class="d-flex align-items-center justify-content-between">
+                          <button class="btn btn-filter">FILTER</button>
+                          <div class="price-label">Price: $0 - $250</div>
+            </div>
+        </div>
+    </div>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-      <h2>Raining Offers For Hot Summer!</h2>
-      <p>
-        25% Off On All Products
-      </p>
-      <div class="hero-buttons">
-        <a href="#" class="btn">Shop Now</a>
-        <a href="#" class="btn secondary">Find More</a>
-      </div>
+                <div class="categories mb-4">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Accessories (7)</a></li>
+                        <li><a href="#">Men (164)</a></li>
+                        <li><a href="#">Women (137)</a></li>
+                    </ul>
+                </div>
+    <div class="contaier">
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <h2>Our Best Sellers</h2>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="news-item mb-3">
+                    <div class="row">
+                        <div class="col-5 col-md-5">
+                            <img src="assets/images/heels.jpg" alt="LinkedIn" class="img-fluid">
+                        </div>
+                        <div class="col-7 col-md-7">
+                            <h4>Blue dark Darvian Jean cloth</h4>
+                                      <p class="price">
+            <span class="old-price">$250.00</span>
+            <span class="new-price">$200.00</span>
+          </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item mb-3">
+                    <div class="row">
+                        <div class="col-5 col-md-5">
+                            <img src="assets/images/snickers.jpg" alt="Expanding Markets" class="img-fluid">
+                        </div>
+                        <div class="col-7 col-md-7">
+                            <h4>Blue dark Darvian Jean cloth</h4>
+                                         <p class="price">
+            <span class="old-price">$250.00</span>
+            <span class="new-price">$200.00</span>
+          </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item mb-3">
+                    <div class="row">
+                        <div class="col-5 col-md-5">
+                            <img src="assets/images/refrigerator.jpg" alt="Design Identity" class="img-fluid">
+                        </div>
+                        <div class="col-7 col-md-7">
+                            <h4>Blue dark Darvian Jean cloth</h4>
+                                      <p class="price">
+            <span class="old-price">$250.00</span>
+            <span class="new-price">$200.00</span>
+          </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item mb-3">
+                    <div class="row">
+                        <div class="col-5 col-md-5">
+                            <img src="assets/images/washing-machine.jpg" alt="Instagram Reach" class="img-fluid">
+                        </div>
+                        <div class="col-7 col-md-7">
+                            <h4>Blue dark Darvian Jean cloth</h4>
+                                      <p class="price">
+            <span class="old-price">$250.00</span>
+            <span class="new-price">$200.00</span>
+          </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-item mb-3">
+                    <div class="row">
+                        <div class="col-5 col-md-5">
+                            <img src="assets/images/home.jpg" alt="Track Record" class="img-fluid">
+                        </div>
+                        <div class="col-7 col-md-7">
+                            <h4>Blue dark Darvian Jean cloth</h4>
+                                      <p class="price">
+            <span class="old-price">$250.00</span>
+            <span class="new-price">$200.00</span>
+          </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-  </section>
 
-<section class="container-xl">
-    <div class="logo-wrapper">
-    <div class="logo-container">
-      <img src="assets/images/brand.png" alt="Logo 1">
-      <img src="assets/images/brand.png" alt="Logo 2">
-      <img src="assets/images/brand.png" alt="Logo 3">
-      <img src="assets/images/brand.png" alt="Logo 4">
-      <img src="assets/images/brand.png" alt="Logo 5">
-      <img src="assets/images/brand.png" alt="Logo 1">
-      <img src="assets/images/brand.png" alt="Logo 2">
-      <img src="assets/images/brand.png" alt="Logo 3">
-      <img src="assets/images/brand.png" alt="Logo 4">
-      <img src="assets/images/brand.png" alt="Logo 5">
-    </div>
-  </div>
-</section>
-
-  <section class="category-cards">
-    <div class="category-card">
-      <img src="assets/images/about.jpg" alt="Card Image 1">
-      <div class="category-card-gradient"></div>
-      <div class="category-card-content">
-        <h3>20% Off On Tank Tops</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac lorem.
-        </p>
-        <a href="#" class="btn">Shop Now</a>
-      </div>
-    </div>
-    <div class="category-card">
-      <img src="assets/images/refrigerator.jpg" alt="Card Image 2">
-      <div class="category-card-gradient"></div>
-      <div class="category-card-content">
-        <h3>Latest Eyewear For You</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac lorem.
-        </p>
-        <a href="#" class="btn">Shop Now</a>
-      </div>
-    </div>
-    <div class="category-card">
-      <img src="assets/images/about2.jpg" alt="Card Image 3">
-      <div class="category-card-gradient"></div>
-      <div class="category-card-content">
-        <h3>Let's Lorem Suit Up!</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac lorem.
-        </p>
-        <a href="#" class="btn">Check Out</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="container">
-    <div class="featured-products">
-      <h2>Featured Products</h2>
+            </aside>
+            <section class="col-md-9">
+    <div class="featured-products" style="padding: 0px;">
+      <h2>Shop</h2>
       <div class="products-grid">
         <!-- Product Card 1 -->
                 <div class="product-card">
@@ -276,114 +316,16 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="special-offer">
-    <div class="container">
-          <div class="offer-content">
-      <p class="limited-time">
-        Limited Time Offer
-      </p>
-      <h2 class="title">Special Edition</h2>
-      <p class="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae luctus neque. Aenean vehicula, nibh at scelerisque dictum, nulla ex fringilla tortor.
-      </p>
-      <p class="discount">
-        Buy This T-shirt At 20% Discount. Use Code OFF20
-      </p>
-      <a href="#" class="btn">Shop Now</a>
-    </div>
-    <div class="offer-image">
-      <img src="assets/images/girl.jpg" alt="Special Edition T-shirt">
-    </div>
-    </div>
-
-  </section>
-  
-  <section class="features-section container">
-    <div class="feature-container">
-      <div class="feature">
-        <i class="fas fa-globe"></i>
-        <h3>Worldwide Shipping</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-star"></i>
-        <h3>Best Quality</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-tags"></i>
-        <h3>Best Offers</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-lock"></i>
-        <h3>Secure Payments</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-      </div>
-    </div>
-  </section>
-  
-      <div class="footer-top">
-        SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.
-    </div>
-    <div class="container">
-      <div class="footer-main">
-  
-        <div class="row">
-            <div class="col-md-3">
-                <h5>BIGGEST</h5>
-                <p>The best look anytime, anywhere.</p>
-            </div>
-            <div class="col-md-3">
-                <h5>For Her</h5>
-                <p><a href="#">Women Jeans</a></p>
-                <p><a href="#">Tops and Shirts</a></p>
-                <p><a href="#">Women Jackets</a></p>
-                <p><a href="#">Heels and Flats</a></p>
-                <p><a href="#">Women Accessories</a></p>
-            </div>
-            <div class="col-md-3">
-                <h5>For Him</h5>
-                <p><a href="#">Men Jeans</a></p>
-                <p><a href="#">Men Shirts</a></p>
-                <p><a href="#">Men Shoes</a></p>
-                <p><a href="#">Men Accessories</a></p>
-                <p><a href="#">Men Jackets</a></p>
-            </div>
-            <div class="col-md-3">
-                <h5>Subscribe</h5>
-                <form>
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Your email address">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px">SUBSCRIBE</button>
-                </form>
-            </div>
+            </section>
         </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-    <div class="container">
-        <p>Copyright © 2024 Biggest</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-google"></i></a>
-        </div>
-    </div>
-    </div>
+    </main>
+        <script>
+        function updatePriceLabel(value) {
+            document.querySelector('.price-label').textContent = `Price: $0 - $${value}`;
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
