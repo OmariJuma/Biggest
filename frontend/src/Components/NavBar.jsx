@@ -26,9 +26,9 @@ const Header = () => {
     <React.Fragment>
       <AppBar
         sx={{
-          position: "sticky",
-          backgroundColor: "inherit",
-          color: "inherit",
+          position: "absolute",
+          backgroundColor: "transparent",
+          color: "white",
         }}
       >
         <Container>
