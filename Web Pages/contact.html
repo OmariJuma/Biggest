@@ -4,73 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Section</title>
-    <style>
-        .first-body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .first-container {
-            text-align: center;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .grid {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .grid .card {
-            background: white;
-            padding: 20px;
-            width: 180px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin: 10px;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        .grid .card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .grid .card p {
-            margin: 0 0 10px 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .grid .card a {
-            display: block;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .grid .card a:hover {
-            text-decoration: underline;
-        }
-    </style>
+      <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- Include FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="first-body">
-    <div class="first-container">
+<body>
+  <header>
+    <div class="header-container container-xl">
+      <h1 class="logo">BIGGEST</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Everything</a></li>
+          <li><a href="#">Women</a></li>
+          <li><a href="#">Men</a></li>
+          <li><a href="#">Accessories</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="about-us.html">About</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="#">Login</a>
+        <a href="#" class="cart">$0.00</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="contact-hero">
+    <div class="container">
+    <div class="contact-hero-content">
+      <h2>About Us</h2>
+    </div>
+    </div>
+
+  </section>
+
+<section class="first-body">
+    <div class="container">
         <h2>Have any queries? We're here to help.</h2>
-        <div class="grid">
+        <div class="contact-grid">
             <div class="card">
                 <h3>Sales</h3>
                 <p>Vestibulum ante ipsum primis in</p>
@@ -96,92 +68,21 @@
                 <a href="tel:1700444">1700 444</a>
             </div>
         </div>
+
     </div>
-</body>
-</html>
+</section>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-    <style>
-        .second-body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .contact-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1000px;
-            width: 100%;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .contact-info {
-            max-width: 400px;
-        }
-
-        .contact-info h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .contact-info p {
-            color: #666;
-            line-height: 1.5;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            width: 400px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .contact-form button {
-            background: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .contact-form button:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
-<body class="second-body">
+<section class="second-body">
+  <div class="container">
+    
     <div class="contact-section">
-        <div class="contact-info">
+        <div class="col-lg-6 contact-info">
             <p>Don't be a stranger!</p>
             <h2>You tell us. We listen.</h2>
             <p>Cras ultricies felis eu nunc iaculis. Quisque non convallis nisl, at condimentum sem. Praesent gravida libero lacus, ut eleifend magna vehicula et. Nam mattis est sed turpis.</p>
         </div>
-        <div class="contact-form">
+        <div class="col-lg-6 contact-form">
             <form>
                 <input type="text" name="name" placeholder="Name" required>
                 <input type="text" name="subject" placeholder="Subject" required>
@@ -191,64 +92,17 @@
             </form>
         </div>
     </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer Section</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .footer-top {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            border-bottom: 1px solid #e9ecef;
-            text-align: center;
-            font-size: 18px;
-        }
+   </div>
+</section>
 
-        .footer-main {
-            padding: 40px 0;
-        }
 
-        .footer-main h5 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .footer-main p, .footer-main a {
-            color: #6c757d;
-            text-decoration: none;
-        }
-
-        .footer-main a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-bottom {
-            background-color: #f8f9fa;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .social-icons a {
-            color: #6c757d;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        .social-icons a:hover {
-            color: #007bff;
-        }
-    </style>
-</head>
-<body>
+<section>
     <div class="footer-top">
         SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.
     </div>
-    <div class="container footer-main">
+    <div class="container">
+      <div class="footer-main">
+  
         <div class="row">
             <div class="col-md-3">
                 <h5>BIGGEST</h5>
@@ -276,25 +130,27 @@
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="Your email address">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">SUBSCRIBE</button>
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px">SUBSCRIBE</button>
                 </form>
             </div>
         </div>
+      </div>
     </div>
     <div class="footer-bottom">
+    <div class="container">
         <p>Copyright © 2024 Biggest</p>
         <div class="social-icons">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-instagram"></i></a>
-            <a href="#"><i class="fa fa-youtube"></i></a>
-            <a href="#"><i class="fa fa-google"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-google"></i></a>
         </div>
     </div>
+    </div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+</section>
 </body>
 </html>
