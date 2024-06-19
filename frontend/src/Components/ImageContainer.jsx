@@ -40,12 +40,18 @@ export default function ImageContainer() {
             >
               Amazing Discounts on most items
             </Typography>
+            
             <Button
               variant="text"
-              color="success"
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: "white", color:"black", padding:"10px", textTransform:"initial" }}
             >
-              Start Shopping
+              Shop Now
+            </Button>
+            <Button
+              variant="text"
+              style={{ backgroundColor: "transparent", color:"white", padding:"10px", textTransform:"initial", marginLeft:"20px", border:"2px solid white" }}
+            >
+              Sell Here
             </Button>
           </div>
         }

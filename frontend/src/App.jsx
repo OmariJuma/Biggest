@@ -1,5 +1,5 @@
 import './App.css'
-import Carousel from './Components/Carousel'
+import DisplayAdverts from './Components/DisplayAdverts';
 import ImageContainer from './Components/ImageContainer';
 import NavBar from './Components/NavBar'
 import "react-image-gallery";
@@ -10,9 +10,7 @@ function App() {
   return (<>
     <NavBar/>
     <ImageContainer/>
-    <h1>
-      Hello Biggest Family 
-    </h1>
+   <DisplayAdverts/>
   </>
   )
 }
