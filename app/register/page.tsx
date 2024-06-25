@@ -48,7 +48,7 @@ const RegisterPage = () => {
 
     try {
       // sending API request for registering user
-      const res = await fetch("/api/register", {
+      const res = await fetch("http://localhost:8080/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,6 +56,7 @@ const RegisterPage = () => {
         body: JSON.stringify({
           email,
           password,
+          role:"admin"
         }),
       });
 

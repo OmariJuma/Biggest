@@ -9,7 +9,7 @@ const DashboardUsers = () => {
 
   useEffect(() => {
     // sending API request for all users
-    fetch("http://localhost:3001/api/users")
+    fetch("http://localhost:8080/api/users")
       .then((res) => {
         return res.json();
       })

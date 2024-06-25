@@ -6,10 +6,13 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { MIMEType } from "util";
 
 const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const session = useSession();
   const { data: session, status: sessionStatus } = useSession();
 
@@ -22,8 +25,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    setEmail(e.target[0].value);
+    setPassword(e.target[1].value);
 
     if (!isValidEmailAddressFormat(email)) {
       setError("Email is invalid");
@@ -36,25 +39,35 @@ const LoginPage = () => {
       toast.error("Password is invalid");
       return;
     }
+    try {
+      const res = await fetch(`http://localhost:8080/api/users/email/${email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password
+        }),
+      });
+      console.log(res)
+      //   if (res?.error) {
+      //     setError("Invalid email or password");
+      //     toast.error("Invalid email or password");
+      //     if (res?.url) router.replace("/");
+      //   } else {
+      //     setError("");
+      //     toast.success("Successful login");
+      //   }
+      // };
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (res?.error) {
-      setError("Invalid email or password");
-      toast.error("Invalid email or password");
-      if (res?.url) router.replace("/");
-    } else {
-      setError("");
-      toast.success("Successful login");
+    } catch (error) {
+      console.log("an error has occured", error)
     }
-  };
 
-  if (sessionStatus === "loading") {
-    return <h1>Loading...</h1>;
+
+    if (sessionStatus === "loading") {
+      return <h1>Loading...</h1>;
+    }
   }
   return (
     <div className="bg-white">
