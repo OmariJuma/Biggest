@@ -13,13 +13,13 @@ const {
 const { checkToken } = require('../middleware/jwt');
 
   router.route('/')
-  .get(getAllUsers)
+  .get(checkToken,getAllUsers)
   .post(createUser);
 
   router.route('/:id')
   .get(checkToken,getUser)
-  .put(updateUser) 
-  .delete(deleteUser);
+  .put(checkToken,updateUser) 
+  .delete(checkToken,deleteUser);
 
   router.route('/email/:email')
   .post(getUserByEmail);

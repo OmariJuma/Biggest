@@ -6,27 +6,28 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { MIMEType } from "util";
+import axios from "axios"
+import { useUserStore } from "../_zustand/userInfo";
 
+type user = {
+  id: string | undefined,
+  email: string | undefined,
+  role: string | undefined,
+  firstName: string | undefined,
+  secondName: string | undefined,
+}
 const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const session = useSession();
+  const { setUserInfo } = useUserStore()
   const { data: session, status: sessionStatus } = useSession();
-
-  useEffect(() => {
-    // if user has already logged in redirect to home page
-    if (sessionStatus === "authenticated") {
-      router.replace("/");
-    }
-  }, [sessionStatus, router]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setEmail(e.target[0].value);
-    setPassword(e.target[1].value);
+    // setEmail(e.target[0].value);
+    // setPassword(e.target[1].value);
 
     if (!isValidEmailAddressFormat(email)) {
       setError("Email is invalid");
@@ -40,27 +41,27 @@ const LoginPage = () => {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:8080/api/users/email/${email}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password
-        }),
-      });
-      console.log(res)
-      //   if (res?.error) {
-      //     setError("Invalid email or password");
-      //     toast.error("Invalid email or password");
-      //     if (res?.url) router.replace("/");
-      //   } else {
-      //     setError("");
-      //     toast.success("Successful login");
-      //   }
-      // };
 
-    } catch (error) {
+      const res = await axios.post(`http://localhost:8080/api/users/email/${email}`, { password: password })
+      console.log(res)
+      if (res.data.error) {
+        setError("Invalid email or password");
+        toast.error(error);
+        // if (res.request) router.replace("/");
+      } else {
+        const { token, id, email, firstName, secondName, role } = res.data
+        setError("");
+        toast.success("Successful login");
+        const info = { id, }
+        setUserInfo({
+          id, firstName, secondName, email, role
+        })
+        localStorage.setItem("token", token)
+        router.replace("/")
+      }
+    }
+
+    catch (error) {
       console.log("an error has occured", error)
     }
 
@@ -94,6 +95,7 @@ const LoginPage = () => {
                     id="email"
                     name="email"
                     type="email"
+                    onChange={(e: ChangeEventHandler<HTMLInputElement> )=>setEmail(e.target.value)}
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -114,6 +116,7 @@ const LoginPage = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
+                    onChange={(e:ChangeEventHandler<HTMLInputElement>)=> setPassword(e.target.value)}
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />

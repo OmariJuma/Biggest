@@ -108,16 +108,17 @@ async function getUserByEmail(request, response) {
     const isMatch = await bcrypt.compare(password, user.password);
     console.log(isMatch);
     if (isMatch) {
-      const {email, id} = user
-      const token = await jwt.sign({ email, id }, process.env.JWT_SECRET, {
+      const {id, email, role} = user
+      const token = await jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
       if (!token) {
         return response
           .status(500)
-          .json("Something wrong has happened, please try again");
+          .json({error:"Something wrong has happened, please try again"});
       }
-      return response.status(200).json({ user, token });
+      
+      return response.status(200).json({ id, email, role, token });
     }
     return response
       .status(404)
@@ -127,7 +128,7 @@ async function getUserByEmail(request, response) {
     .status(404)
     .json({ error: "Your credentials are not of the required length" });
   } catch (error) {
-    response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message:"An error has occured, maybe its the token secret"})
+    response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error:"An error has occured"})
   }
   
 }

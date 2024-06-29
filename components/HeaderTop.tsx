@@ -1,7 +1,7 @@
 // *********************
 // Role of the component: Topbar of the header
 // Name of the component: HeaderTop.tsx
-// Developer: Aleksandar Kuzmanovic
+// Developer: Omar Juma
 // Version: 1.0
 // Component call: <HeaderTop />
 // Input parameters: no input parameters
@@ -9,6 +9,7 @@
 // *********************
 
 "use client";
+import { useUserStore } from "@/app/_zustand/userInfo";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
@@ -19,10 +20,10 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa6";
 
 const HeaderTop = () => {
-  const { data: session }: any = useSession();
+  const {id, email, clearUserInfo } = useUserStore();
 
   const handleLogout = () => {
-    setTimeout(() => signOut(), 1000);
+    clearUserInfo();
     toast.success("Logout successful!");
   }
   return (
@@ -35,11 +36,11 @@ const HeaderTop = () => {
           </li>
           <li className="flex items-center gap-x-2 font-semibold">
             <FaRegEnvelope className="text-white text-xl" />
-            <span>test@email.com</span>
+            <span>biggestSupport@email.com</span>
           </li>
         </ul>
         <ul className="flex items-center gap-x-5 h-full max-[370px]:text-sm max-[370px]:gap-x-2 font-semibold">
-          {!session ? ( 
+          {!id ? ( 
           <>
           <li className="flex items-center">
             <Link href="/login" className="flex items-center gap-x-2 font-semibold">
@@ -55,7 +56,7 @@ const HeaderTop = () => {
           </li>
           </>
           ) :  (<>
-          <span className="ml-10 text-base">{session.user?.email}</span>
+          <span className="ml-10 text-base">{email}</span>
           <li className="flex items-center">
             <button onClick={() => handleLogout()} className="flex items-center gap-x-2 font-semibold">
               <FaRegUser className="text-white" />
