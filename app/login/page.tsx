@@ -3,7 +3,7 @@ import { CustomButton, SectionTitle } from "@/components";
 import { isValidEmailAddressFormat } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios"
@@ -45,6 +45,7 @@ const LoginPage = () => {
       const res = await axios.post(`http://localhost:8080/api/users/email/${email}`, { password: password })
       console.log(res)
       if (res.data.error) {
+        console.log(res.data.error)
         setError("Invalid email or password");
         toast.error(error);
         // if (res.request) router.replace("/");
