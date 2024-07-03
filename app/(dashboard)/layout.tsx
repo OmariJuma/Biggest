@@ -1,29 +1,48 @@
-import { useSession } from "next-auth/react";
-import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
-import toast from "react-hot-toast";
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default async function Layout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const session: {
-    user: { name: string; email: string; image: string };
-  } | null = await getServerSession();
+export default function Layout({ children }) {
+  const [isClientCodeReady, setIsClientCodeReady] = useState(false);
+  const [role, setRole] = useState("user");
+  const [id, setId] = useState(null);
 
-  if (!session) {
-    redirect("/");
+  useEffect(() => {
+    setIsClientCodeReady(true);
+    setId(localStorage.getItem("id"));
+ 
+  }, []); // Empty dependency array ensures it runs only once on mount
+  if(isClientCodeReady){
+    const execute= async () => {
+      const { data } = await axios.get(
+        `http://localhost:8080/api/users/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(data)
+      setRole(data.role);
+    };
+    execute()
   }
+  return (
+    <div>
+      {/* Server-side code can be rendered here */}
+      {isClientCodeReady && (
+        <div>
+          {/* Use optional chaining for potential initial null values */}
+          <h2>Your role is: {role?.toUpperCase()}</h2>
+          <h2>Your ID is: {id?.toString()}</h2>
 
-  let email: string = await session?.user?.email;
-  
-  const res = await fetch(`http://localhost:8080/api/users/email/${email}`);
-  const data = await res.json();
-  // redirecting user to the home page if not admin
-  if (data.role === "user") {
-    redirect("/");
-  }
+          {/* Example conditional rendering based on role */}
+          {role === "admin" && <p>You have admin privileges.</p>}
 
-  return <>{children}</>;
+          {/* Additional logic based on role and ID */}
+          {children}
+        </div>
+      )}
+    </div>
+  );
 }

@@ -24,7 +24,7 @@ const LoginPage = () => {
   const { setUserInfo } = useUserStore()
   const { data: session, status: sessionStatus } = useSession();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // setEmail(e.target[0].value);
     // setPassword(e.target[1].value);
@@ -35,7 +35,7 @@ const LoginPage = () => {
       return;
     }
 
-    if (!password || password.length < 8) {
+    if (!password || password.length < 6) {
       setError("Password is invalid");
       toast.error("Password is invalid");
       return;
@@ -55,9 +55,11 @@ const LoginPage = () => {
         toast.success("Successful login");
         const info = { id, }
         setUserInfo({
-          id, firstName, secondName, email, role
+          id, firstName, secondName, email, role, token
         })
+        
         localStorage.setItem("token", token)
+        localStorage.setItem("id", id)
         router.replace("/")
       }
     }
@@ -96,7 +98,7 @@ const LoginPage = () => {
                     id="email"
                     name="email"
                     type="email"
-                    onChange={(e: ChangeEventHandler<HTMLInputElement> )=>setEmail(e.target.value)}
+                    onChange={(e)=>setEmail(e.target.value)}
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -117,7 +119,7 @@ const LoginPage = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    onChange={(e:ChangeEventHandler<HTMLInputElement>)=> setPassword(e.target.value)}
+                    onChange={(e)=> setPassword(e.target.value)}
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
