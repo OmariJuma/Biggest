@@ -9,8 +9,9 @@ const {
   searchProducts,
   getProductById,
 } = require("../controllers/products");
+const { checkToken } = require("../middleware/jwt");
 
-router.route("/").get(getAllProducts).post(createProduct);
+router.route("/").get(getAllProducts).post(checkToken,createProduct);
 
 
 router
