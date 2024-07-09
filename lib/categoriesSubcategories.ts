@@ -1,9 +1,22 @@
-export const categoriesSubcategories = {
+interface Category{
+  id:number;
+  name: string;
+  subCategories: Subcategory[];
+}
+interface Subcategory{
+  id:number;
+  name:string;
+}
+
+interface CategoriessubCategories{
+  categories: Category[];
+}
+export const categoriessubCategories:CategoriessubCategories = {
   categories: [
     {
       id: 1,
       name: "Clothing & Accessories",
-      subcategories: [
+      subCategories: [
         {
           id: 11,
           name: "Men's Clothing",
@@ -29,7 +42,7 @@ export const categoriesSubcategories = {
     {
       id: 2,
       name: "Electronics",
-      subcategories: [
+      subCategories: [
         {
           id: 21,
           name: "Computers & Laptops",
@@ -59,7 +72,7 @@ export const categoriesSubcategories = {
     {
       id: 3,
       name: "Home & Garden",
-      subcategories: [
+      subCategories: [
         {
           id: 31,
           name: "Furniture",
@@ -85,7 +98,7 @@ export const categoriesSubcategories = {
     {
       id: 4,
       name: "Beauty & Health",
-      subcategories: [
+      subCategories: [
         {
           id: 41,
           name: "Makeup",
@@ -115,7 +128,7 @@ export const categoriesSubcategories = {
     {
       id: 5,
       name: "Toys & Games",
-      subcategories: [
+      subCategories: [
         {
           id: 51,
           name: "Action Figures & Playsets",
@@ -149,7 +162,7 @@ export const categoriesSubcategories = {
     {
       id: 6,
       name: "Sports & Outdoors",
-      subcategories: [
+      subCategories: [
         {
           id: 61,
           name: "Athletic Apparel & Footwear",
@@ -167,7 +180,7 @@ export const categoriesSubcategories = {
     {
       id: 7,
       name: "Pets",
-      subcategories: [
+      subCategories: [
         {
           id: 71,
           name: "Pet Food",
@@ -181,7 +194,7 @@ export const categoriesSubcategories = {
     {
       id: 8,
       name: "Food & Beverages",
-      subcategories: [
+      subCategories: [
         {
           id: 81,
           name: "Grocery",
@@ -199,7 +212,7 @@ export const categoriesSubcategories = {
     {
       id: 9,
       name: "Home Improvement",
-      subcategories: [
+      subCategories: [
         {
           id: 91,
           name: "Tools & Hardware",
@@ -217,7 +230,7 @@ export const categoriesSubcategories = {
     {
       id: 10,
       name: "Arts & Entertainment",
-      subcategories: [
+      subCategories: [
         {
           id: 101,
           name: "Musical Instruments",

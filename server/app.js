@@ -1,6 +1,5 @@
 const express = require("express");
 const bcrypt = require('bcryptjs');
-const fileUpload = require("express-fileupload");
 const productsRouter = require("./routes/products");
 const productImagesRouter = require("./routes/productImages");
 const categoryRouter = require("./routes/category");
@@ -11,6 +10,7 @@ const orderRouter = require("./routes/customer_orders");
 const slugRouter = require("./routes/slugs");
 const orderProductRouter = require('./routes/customer_order_product');
 const wishlistRouter = require('./routes/wishlist');
+var bodyParser = require("body-parser")
 var cors = require("cors");
 const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
 require('dotenv').config();
@@ -25,8 +25,9 @@ app.use(
     // allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.use(fileUpload());
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/images", productImagesRouter);

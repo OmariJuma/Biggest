@@ -10,8 +10,9 @@ const {
   getProductById,
 } = require("../controllers/products");
 const { checkToken } = require("../middleware/jwt");
+const { imageUpload } = require("../middleware/imageUpload");
 
-router.route("/").get(getAllProducts).post(checkToken,createProduct);
+router.route("/").get(getAllProducts).post(checkToken, imageUpload,createProduct);
 
 
 router

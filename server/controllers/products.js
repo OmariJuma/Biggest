@@ -249,29 +249,27 @@ async function getAllProductsOld(request, response) {
 async function createProduct(request, response) {
   try {
     const {
-      slug,
+      // slug,
+      // title,
+      // price,
+      // description,
+      // manufacturer,
+      // categoryId,
+      // inStock,
       title,
-      mainImage,
       price,
+      units,
       description,
       manufacturer,
       categoryId,
-      inStock,
+      subCategoryId,
     } = request.body;
-    const product = await prisma.product.create({
-      data: {
-        slug,
-        title,
-        mainImage,
-        price,
-        rating: 5,
-        description,
-        manufacturer,
-        categoryId,
-        inStock,
-      },
-    });
-    return response.status(201).json(product);
+    // console.log(request.body.images)
+    console.log(request.files)
+    // const images = request.files[0].name;
+    // console.log(images);
+    let slug = title;
+    return response.status(201).json();
   } catch (error) {
     console.error("Error creating product:", error); // Dodajemo log za proveru
     return response.status(500).json({ error: "Error creating product" });

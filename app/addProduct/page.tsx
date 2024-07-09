@@ -1,41 +1,67 @@
 "use client";
 import { CustomButton, SectionTitle } from "@/components";
+import { categoriessubCategories } from "@/lib/categoriesSubcategories";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Image {
   name: string;
   type: string;
   size: number;
-  // Add other image properties as needed (e.g., preview data)
+}
+interface Subcategory {
+  id: number;
+  name: string;
 }
 function page() {
-  // slug,
-  // title,
-  // mainImage,
-  // price,
-  // description,
-  // manufacturer,
-  // categoryId,
+  
   const [title, setTitle] = useState<string>();
   const [units, setUnits] = useState<number>();
   const [price, setPrice] = useState<number>();
   const [description, setDescription] = useState<string>();
   const [images, setImages] = useState<Image[]>([]);
   const [manufacturer, setManufacturer] = useState<string>();
-  const [categoryId, setCategoryId] = useState<string>();
+  const [categoryId, setCategoryId] = useState<number>();
+  const [subCategoryId, setSubCategoryId] = useState<number>();
+  const [filteredSubCategories, setFilteredSubCategories] = useState<Subcategory[]>([]);
+
+  useEffect(() => {
+    const filteredCategory = categoriessubCategories.categories.find(
+      (category) => category.id === categoryId
+    );
+    setFilteredSubCategories(filteredCategory?.subCategories || []);
+  }, [categoryId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(title, price, units, description, images);
+    const formData: FormData =  new FormData();
+    formData.append("title", title || '');
+    formData.append("units", units?.toString() || '');
+    formData.append("price", price?.toString() || '');
+    formData.append("description", description || '');
+    formData.append("manufacturer", manufacturer || '');
+    formData.append("categoryId", categoryId?.toString() || '');
+    formData.append("subCategoryId", subCategoryId?.toString() || '');
+    images.forEach((image) => {
+      console.log(image)
+      formData.append("images", image); // Append each image with its name
+    });
+   
     try {
-      const { data } = await axios.post(`http://localhost:8080/api/products`, {
-        id: localStorage.getItem("id"),
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-    } catch (error) {}
+      const { data } = await axios.post(
+        `http://localhost:8080/api/products`,
+       formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data"
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +149,7 @@ function page() {
                     id="price"
                     name="price"
                     type="number"
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => setPrice(parseInt(e.target.value))}
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -143,7 +169,7 @@ function page() {
                     type="number"
                     min={1}
                     step={""}
-                    onChange={(e) => setUnits(e.target.value)}
+                    onChange={(e) => setUnits(parseInt(e.target.value))}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -166,6 +192,52 @@ function page() {
                     onChange={handleImageUpload}
                     className="block w-full rounded-md h- 10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="category"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Select Category
+                </label>
+                <div className="mt-2">
+                  <select
+                    id="category"
+                    name="category"
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                      setCategoryId(parseInt(e.target.value))
+                    }
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="">Select Category</option>
+                    {categoriessubCategories.categories.map(
+                      (category: { id: number; name: string }) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+                <div className="mt-2">
+                  <select
+                    id="subCategory"
+                    name="subCategory"
+                    onChange={(e) => setSubCategoryId(parseInt(e.target.value))}
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="">Select Sub-Category</option>
+                    {filteredSubCategories.length > 0
+                      ? filteredSubCategories.map((subcategory) => (
+                          <option key={subcategory.id} value={subcategory.id}>
+                            {subcategory.name}
+                          </option>
+                        ))
+                      : null}
+                  </select>
                 </div>
               </div>
               <div>
