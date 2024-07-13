@@ -41,8 +41,8 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
       <div className="max-w-screen-2xl mx-auto">
         <div className="flex justify-center gap-x-16 pt-10 max-lg:flex-col items-center gap-y-5 px-5">
           <div>
-            <Image
-              src={product?.mainImage ? `/${product?.mainImage}` : "/product_placeholder.jpg"}
+            <img
+              src={product?.mainImage ? `http://localhost:8080/public/${product?.mainImage}` : "/product_placeholder.jpg"}
               width={500}
               height={500}
               alt="main image"
@@ -50,9 +50,9 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
             />
             <div className="flex justify-around mt-5 flex-wrap gap-y-1 max-[500px]:justify-center max-[500px]:gap-x-1">
               {images?.map((imageItem: ImageItem) => (
-                <Image
+                <img
                   key={imageItem.imageID}
-                  src={`/${imageItem.image}`}
+                  src={`http://localhost:8080/public/${imageItem.image}`}
                   width={100}
                   height={100}
                   alt="laptop image"

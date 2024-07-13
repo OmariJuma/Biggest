@@ -3,6 +3,7 @@ import { CustomButton, SectionTitle } from "@/components";
 import { categoriessubCategories } from "@/lib/categoriesSubcategories";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import FileReadPreview from "@/components/FileReadPreview";
 
 interface Image {
   name: string;
@@ -14,16 +15,19 @@ interface Subcategory {
   name: string;
 }
 function page() {
-  
-  const [title, setTitle] = useState<string>();
-  const [units, setUnits] = useState<number>();
-  const [price, setPrice] = useState<number>();
-  const [description, setDescription] = useState<string>();
+  const [title, setTitle] = useState<string>("");
+  const [units, setUnits] = useState<number>(1);
+  const [price, setPrice] = useState<number>(0);
+  const [description, setDescription] = useState<string>("");
   const [images, setImages] = useState<Image[]>([]);
-  const [manufacturer, setManufacturer] = useState<string>();
+  const [manufacturer, setManufacturer] = useState<string>("");
   const [categoryId, setCategoryId] = useState<number>();
   const [subCategoryId, setSubCategoryId] = useState<number>();
-  const [filteredSubCategories, setFilteredSubCategories] = useState<Subcategory[]>([]);
+  const [location, setLocation] = useState<string>("");
+  const [condition, setCondition] = useState<string>("");
+  const [filteredSubCategories, setFilteredSubCategories] = useState<
+    Subcategory[]
+  >([]);
 
   useEffect(() => {
     const filteredCategory = categoriessubCategories.categories.find(
@@ -34,27 +38,55 @@ function page() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData: FormData =  new FormData();
-    formData.append("title", title || '');
-    formData.append("units", units?.toString() || '');
-    formData.append("price", price?.toString() || '');
-    formData.append("description", description || '');
-    formData.append("manufacturer", manufacturer || '');
-    formData.append("categoryId", categoryId?.toString() || '');
-    formData.append("subCategoryId", subCategoryId?.toString() || '');
+    let categoryName = "";
+    let subCategoryName = "";
+
+    // Find category object based on categoryId
+    const selectedCategory = categoriessubCategories.categories.find(
+      (category) => category.id === categoryId
+    );
+
+    if (selectedCategory) {
+      categoryName = selectedCategory.name;
+
+      // Find subcategory object based on subCategoryId within the selected category
+      const selectedSubcategory = selectedCategory.subCategories.find(
+        (subcategory) => subcategory.id === subCategoryId
+      );
+
+      if (selectedSubcategory) {
+        subCategoryName = selectedSubcategory.name;
+      }
+    }
+
+    console.log("Category Name:", categoryName);
+    console.log("Subcategory Name:", subCategoryName);
+
+    const formData: FormData = new FormData();
+    formData.append("title", title || "");
+    formData.append("units", units?.toString() || "");
+    formData.append("price", price?.toString() || "");
+    formData.append("description", description || "");
+    formData.append("manufacturer", manufacturer || "");
+    formData.append("categoryId", categoryId);
+    formData.append("category", categoryName);
+    formData.append("subCategory", subCategoryName);
+    formData.append("subCategoryId", subCategoryId);
+    formData.append("Location", location);
+    formData.append("Condition", condition);
     images.forEach((image) => {
-      console.log(image)
+      console.log(image);
       formData.append("images", image); // Append each image with its name
     });
-   
+
     try {
       const { data } = await axios.post(
         `http://localhost:8080/api/products`,
-       formData,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -62,29 +94,6 @@ function page() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const images: Image[] = Array.from(e.target.files) as Image[];
-    const validImages = [] as Image[];
-    images.forEach((image) => {
-      const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/gif",
-        "image/jpg",
-      ];
-      if (allowedTypes.includes(image.type)) {
-        validImages.push(image);
-        console.log("Images is of correct type");
-      } else {
-        console.error(
-          `Invalid file type: ${image.name} (expected "image/jpeg", "image/png", "image/gif", "image/jpg)`
-        );
-      }
-    });
-    setImages(validImages);
-    console.log("Images uploaded successfully");
   };
 
   return (
@@ -142,7 +151,7 @@ function page() {
                   htmlFor="price"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Price
+                  Price of the Product
                 </label>
                 <div className="mt-2">
                   <input
@@ -168,7 +177,7 @@ function page() {
                     name="units"
                     type="number"
                     min={1}
-                    step={""}
+                    step={1}
                     onChange={(e) => setUnits(parseInt(e.target.value))}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -177,23 +186,38 @@ function page() {
               <div>
                 <div>
                   <label
-                    htmlFor="image"
+                    htmlFor="location"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Upload photos of the product
+                    Enter the product's condition
                   </label>
                   <input
-                    id="image"
-                    name="image"
-                    type="file"
-                    multiple
-                    accept="image/jpeg, image/png, image/gif, image/jpg"
-                    title="Upload Images"
-                    onChange={handleImageUpload}
-                    className="block w-full rounded-md h- 10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    id="condition"
+                    name="condition"
+                    type="text"
+                    onChange={(e) => setCondition(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
+              <div>
+                <div>
+                  <label
+                    htmlFor="location"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Enter the product's location
+                  </label>
+                  <input
+                    id="location"
+                    name="location"
+                    type="text"
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <FileReadPreview images={images} setImages={setImages} />
               <div>
                 <label
                   htmlFor="category"

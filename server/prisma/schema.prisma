@@ -18,12 +18,16 @@ model Product {
   slug           String                   @unique
   title          String
   mainImage      String
+  Condition      String
+  Location       String
   price          Int                      @default(0)
   rating         Int                      @default(0)
   description    String
   manufacturer   String
   inStock        Int                      @default(1)
   categoryId     String
+  subCategory    String                   
+  subCategoryId  String
   category       Category                 @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   customerOrders customer_order_product[]
   Wishlist       Wishlist[]

@@ -7,16 +7,18 @@
 // Input parameters: { slug }: any
 // Output: products grid
 // *********************
-
-import React from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 import ProductItem from "./ProductItem";
+import axios from "axios";
 
-const Products = async ({ slug }: any) => {
+const Products = ({ slug }: any) => {
   // getting all data from URL slug and preparing everything for sending GET request
   const inStockNum = slug?.searchParams?.inStock === "true" ? 1 : 0;
   const outOfStockNum = slug?.searchParams?.outOfStock === "true" ? 1 : 0;
   const page = slug?.searchParams?.page ? Number(slug?.searchParams?.page) : 1;
-
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   let stockMode: string = "lte";
   
   // preparing inStock and out of stock filter for GET request
@@ -38,30 +40,38 @@ const Products = async ({ slug }: any) => {
   }
 
   // sending API request with filtering, sorting and pagination for getting all products
-  const data = await fetch(
-    `http://localhost:8080/api/products?filters[price][$lte]=${
-      slug?.searchParams?.price || 3000
-    }&filters[rating][$gte]=${
-      Number(slug?.searchParams?.rating) || 0
-    }&filters[inStock][$${stockMode}]=1&${
-      slug?.params?.slug?.length > 0
-        ? `filters[category][$equals]=${slug?.params?.slug}&`
-        : ""
-    }sort=${slug?.searchParams?.sort}&page=${page}`
-  );
+  useEffect(()=>{
+    const getDataUsingFilters = async()=>{
+      setLoading(true);
+      try {
+        const data = await axios(
+          `http://localhost:8080/api/products?filters[price][$lte]=${
+            slug?.searchParams?.price || 1
+          }&filters[rating][$gte]=${
+            Number(slug?.searchParams?.rating) || 0
+          }&filters[inStock][$${stockMode}]=1&${
+            slug?.params?.slug?.length > 0
+              ? `filters[category][$equals]=${slug?.params?.slug}&`
+              : ""
+          }sort=${slug?.searchParams?.sort}&page=${page}`
+        );
+        setProducts(data.data)
 
-  const products = await data.json();
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+      finally{
+        setLoading(false); 
+      }
+     
+    }
+    getDataUsingFilters()
+  }, [slug])
 
-  /*
-    const req = await fetch(
-    `http://localhost:1337/api/products?populate=*&filters[price][$lte]=${
-      searchParams?.price || 1000
-    }${searchParams.women === "true" ? "&filters[category][$eq]=women" : ""}${searchParams.womenNewEdition === "true" ? "&filters[category][$eq]=women%20new%20edition" : ""}&filters[rating][$gte]=${
-      searchParams?.rating || 1
-    }`
-  );
-  const products = await req.json();
-  */
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-5 max-[1300px]:grid-cols-3 max-lg:grid-cols-2 max-[500px]:grid-cols-1">
       {products.length > 0 ? (

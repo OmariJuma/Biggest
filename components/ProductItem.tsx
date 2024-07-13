@@ -23,10 +23,10 @@ const ProductItem = ({
   return (
     <div className="flex flex-col items-center gap-y-2">
       <Link href={`/product/${product.slug}`}>
-        <Image
+        <img
           src={
             product.mainImage
-              ? `/${product.mainImage}`
+              ? `http://localhost:8080/public/${product.mainImage}`
               : "/product_placeholder.jpg"
           }
           width="0"

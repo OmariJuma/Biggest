@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require('bcryptjs');
+const path = require('path');
 const productsRouter = require("./routes/products");
 const productImagesRouter = require("./routes/productImages");
 const categoryRouter = require("./routes/category");
@@ -38,6 +38,7 @@ app.use("/api/orders", orderRouter);
 app.use('/api/order-product', orderProductRouter);
 app.use("/api/slugs", slugRouter);
 app.use("/api/wishlist", wishlistRouter);
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(errorHandlerMiddleware)
 
