@@ -6,6 +6,7 @@ import {
   SingleProductDynamicFields,
   AddToWishlistBtn,
 } from "@/components";
+import ImageCarousel from "@/components/ImageCarousel";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -41,24 +42,16 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
       <div className="max-w-screen-2xl mx-auto">
         <div className="flex justify-center gap-x-16 pt-10 max-lg:flex-col items-center gap-y-5 px-5">
           <div>
-            <img
+            {/* <img
               src={product?.mainImage ? `http://localhost:8080/public/${product?.mainImage}` : "/product_placeholder.jpg"}
               width={500}
               height={500}
               alt="main image"
               className="w-auto h-auto"
-            />
+              /> */}
+              <ImageCarousel slideImages={images} mainImage={product?.mainImage}/>
             <div className="flex justify-around mt-5 flex-wrap gap-y-1 max-[500px]:justify-center max-[500px]:gap-x-1">
-              {images?.map((imageItem: ImageItem) => (
-                <img
-                  key={imageItem.imageID}
-                  src={`http://localhost:8080/public/${imageItem.image}`}
-                  width={100}
-                  height={100}
-                  alt="laptop image"
-                  className="w-auto h-auto"
-                />
-              ))}
+
             </div>
           </div>
           <div className="flex flex-col gap-y-7 text-black max-[500px]:text-center">

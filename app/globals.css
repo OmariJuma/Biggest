@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .range{
     --range-shdw: #3B82F6;
 }
@@ -23,3 +22,26 @@
       ),
       linear-gradient(-45deg, white 50%, #3B82F6 50.99%);
 }
+@media(min-width:360px) {
+  .carousel-container {
+    max-width: 90vw;
+  }
+}
+@media(min-width:480px) {
+  .carousel-container {
+    max-width: 90vw;
+    
+  }
+}
+@media screen and (min-width: 768px) {
+  .carousel-container {
+    max-width: 768px;
+  }
+  
+}
+  @media screen and (min-width: 1024px) {
+    .carousel-container {
+      max-width: 1024px;
+    }
+    
+  }
