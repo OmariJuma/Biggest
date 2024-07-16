@@ -43,7 +43,7 @@ const AddNewProduct = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product),
     };
-    fetch(`http://localhost:8080/api/products`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/products`, requestOptions)
       .then((response) => {
         if (response.status === 201) {
           return response.json();
@@ -74,7 +74,7 @@ const AddNewProduct = () => {
     formData.append("uploadedFile", file);
 
     try {
-      const response = await fetch("http://localhost:8080/api/main-image", {
+      const response = await fetch("${process.env.NEXT_PUBLIC_BACKEND_URI}/api/main-image", {
         method: "POST",
         body: formData,
       });
@@ -90,7 +90,7 @@ const AddNewProduct = () => {
   };
 
   const fetchCategories = async () => {
-    fetch(`http://localhost:8080/api/categories`)
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`)
       .then((res) => {
         return res.json();
       })

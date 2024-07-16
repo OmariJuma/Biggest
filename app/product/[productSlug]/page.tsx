@@ -23,13 +23,13 @@ interface ImageItem {
 const SingleProductPage = async ({ params }: SingleProductPageProps) => {
   // sending API request for a single product with a given product slug
   const data = await fetch(
-    `http://localhost:8080/api/slugs/${params.productSlug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/slugs/${params.productSlug}`
   );
   const product = await data.json();
 
   // sending API request for more than 1 product image if it exists
   const imagesData = await fetch(
-    `http://localhost:8080/api/images/${product.id}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/images/${product.id}`
   );
   const images = await imagesData.json();
 
@@ -43,7 +43,7 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
         <div className="flex justify-center gap-x-16 pt-10 max-lg:flex-col items-center gap-y-5 px-5">
           <div>
             {/* <img
-              src={product?.mainImage ? `http://localhost:8080/public/${product?.mainImage}` : "/product_placeholder.jpg"}
+              src={product?.mainImage ? `${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${product?.mainImage}` : "/product_placeholder.jpg"}
               width={500}
               height={500}
               alt="main image"

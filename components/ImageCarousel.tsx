@@ -47,7 +47,7 @@ function ImageCarousel({ slideImages, mainImage }) {
   let imageArray = [
     <img
       key="mainImage"
-      src={`http://localhost:8080/public/${mainImage}`}
+      src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${mainImage}`}
       alt="Main Image"
       className="w-full" // Tailwind classes for width and aspect ratio
       style={{ objectFit: "scale-down" , aspectRatio:"4/3"}} // Style to cover the image
@@ -59,7 +59,7 @@ function ImageCarousel({ slideImages, mainImage }) {
     imageArray.push(
       <div key={`slide-${i}`}>
         <img
-          src={`http://localhost:8080/public/${slide.image}`}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${slide.image}`}
           alt={`Slide Image ${i + 1}`}
           className="w-full" // Tailwind classes for width and aspect ratio
           style={{ objectFit: "scale-down" , aspectRatio:"4/3"}} // Style to cover the image

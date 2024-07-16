@@ -16,7 +16,7 @@ export default function Layout({ children }) {
   if (isClientCodeReady) {
     const execute = async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/users/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
