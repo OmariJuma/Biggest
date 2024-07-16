@@ -8,21 +8,27 @@
 // Output: Category icon, category name and link to the category
 // *********************
 
+import Image from "next/image";
 import Link from "next/link";
 import React, { type ReactNode } from "react";
 
 interface CategoryItemProps {
-  children: ReactNode;
   title: string;
   href: string;
+  image: string;
 }
 
-const CategoryItem = ({ title, children, href }: CategoryItemProps) => {
+const CategoryItem = ({ title, image, href }: CategoryItemProps) => {
   return (
     <Link href={href}>
       <div className="flex flex-col items-center gap-y-2 cursor-pointer bg-white py-5 text-black hover:bg-gray-100">
-        {children}
-
+        <Image
+          src={image}
+          width={200}
+          height={100}
+          alt={title}
+          style={{ aspectRatio: 1, objectFit: "cover" }}
+        />
         <h3 className="font-semibold text-xl">{title}</h3>
       </div>
     </Link>

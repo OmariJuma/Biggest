@@ -1,6 +1,9 @@
 interface Category{
   id:number;
   name: string;
+  href:string;
+  image:any;
+
   subCategories: Subcategory[];
 }
 interface Subcategory{
@@ -16,6 +19,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 1,
       name: "Clothing & Accessories",
+      href:"/shop/clothing-accessories",
+      image:"/clothing-accessories-men-women.jpg",
       subCategories: [
         {
           id: 11,
@@ -42,6 +47,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 2,
       name: "Electronics",
+      href:"/shop/electronics",
+      image:"/electronics.jpg",
       subCategories: [
         {
           id: 21,
@@ -72,6 +79,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 3,
       name: "Home & Garden",
+      href:"/shop/home-garden",
+      image:"/home.jpg",
       subCategories: [
         {
           id: 31,
@@ -98,6 +107,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 4,
       name: "Beauty & Health",
+      href:"/shop/beauty-health",
+      image:"/beautyHealth.webp",
       subCategories: [
         {
           id: 41,
@@ -128,6 +139,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 5,
       name: "Toys & Games",
+      href:"/shop/toys-games",
+      image:"/toys and games.jpg",
       subCategories: [
         {
           id: 51,
@@ -162,6 +175,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 6,
       name: "Sports & Outdoors",
+      href:"/shop/sports-outdoors",
+      image:"/sports and outdoor.jpg",
       subCategories: [
         {
           id: 61,
@@ -180,6 +195,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 7,
       name: "Pets",
+      href:"/shop/pets",
+      image:"/pets.webp",
       subCategories: [
         {
           id: 71,
@@ -194,6 +211,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 8,
       name: "Food & Beverages",
+      href:"/shop/food-beverages",
+      image:"/Food and Beverage.webp",
       subCategories: [
         {
           id: 81,
@@ -212,6 +231,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 9,
       name: "Home Improvement",
+      href:"/shop/home-improvement",
+      image:"/construction.webp",
       subCategories: [
         {
           id: 91,
@@ -230,6 +251,8 @@ export const categoriessubCategories:CategoriessubCategories = {
     {
       id: 10,
       name: "Arts & Entertainment",
+      href:"/shop/arts-entertainment",
+      image:"/art and entertainment.jpg",
       subCategories: [
         {
           id: 101,
