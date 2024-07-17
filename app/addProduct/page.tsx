@@ -5,21 +5,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import FileReadPreview from "@/components/FileReadPreview";
 
-interface Image {
-  name: string;
-  type: string;
-  size: number;
-}
 interface Subcategory {
   id: number;
   name: string;
 }
-function page() {
+function Page() {
   const [title, setTitle] = useState<string>("");
   const [units, setUnits] = useState<number>(1);
   const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [manufacturer, setManufacturer] = useState<string>("");
   const [categoryId, setCategoryId] = useState<number>();
   const [subCategoryId, setSubCategoryId] = useState<number>();
@@ -68,15 +63,15 @@ function page() {
     formData.append("price", price?.toString() || "");
     formData.append("description", description || "");
     formData.append("manufacturer", manufacturer || "");
-    formData.append("categoryId", categoryId);
+    formData.append("categoryId", categoryId?.toString() || "");
     formData.append("category", categoryName);
     formData.append("subCategory", subCategoryName);
-    formData.append("subCategoryId", subCategoryId);
+    formData.append("subCategoryId", subCategoryId?.toString() || "");
     formData.append("Location", location);
     formData.append("Condition", condition);
     images.forEach((image) => {
       console.log(image);
-      formData.append("images", image); // Append each image with its name
+      formData.append("images", image, image.name); // Append each image with its name
     });
 
     try {
@@ -302,4 +297,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

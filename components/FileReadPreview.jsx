@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -93,13 +94,14 @@ export default function FileReadPreview({ images, setImages }) {
   const thumbs = images.map((image) => (
     <div style={thumb} key={image.name}>
       <div style={thumbInner}>
-        <img
+        <Image
           src={image.preview}
           style={img}
           // Revoke data uri after image is loaded
           onLoad={() => {
             URL.revokeObjectURL(image.preview);
           }}
+          alt={image.name}
         />
       </div>
     </div>

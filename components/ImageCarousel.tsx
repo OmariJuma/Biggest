@@ -2,8 +2,9 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-const getDeviceType = (width) => {
+const getDeviceType = (width: number) => {
   if (width >= 1280) {
     return "desktop";
   } else if (width >= 768) {
@@ -45,23 +46,27 @@ function ImageCarousel({ slideImages, mainImage }) {
 
 
   let imageArray = [
-    <img
+    <Image
       key="mainImage"
       src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${mainImage}`}
       alt="Main Image"
       className="w-full" // Tailwind classes for width and aspect ratio
+      width={300}
+      height={250}
       style={{ objectFit: "scale-down" , aspectRatio:"4/3"}} // Style to cover the image
 
     />,
   ];
 
-  slideImages.forEach((slide, i) => {
+  slideImages.forEach((slide: { image: any; }, i: number) => {
     imageArray.push(
       <div key={`slide-${i}`}>
-        <img
+        <Image
           src={`${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${slide.image}`}
           alt={`Slide Image ${i + 1}`}
           className="w-full" // Tailwind classes for width and aspect ratio
+          width={300}
+          height={250}
           style={{ objectFit: "scale-down" , aspectRatio:"4/3"}} // Style to cover the image
         />
       </div>
