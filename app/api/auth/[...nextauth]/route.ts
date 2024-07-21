@@ -18,7 +18,6 @@ const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-
         try {
           const user = await prisma.user.findFirst({
             where: {
@@ -38,7 +37,7 @@ const authOptions = {
           throw new Error(err);
         }
       },
-    })
+    }),
     // GithubProvider({
     //   clientId: process.env.GITHUB_ID ?? "",
     //   clientSecret: process.env.GITHUB_SECRET ?? "",
@@ -49,6 +48,7 @@ const authOptions = {
     // }),
     // ...add more providers here if you want. You can find them on nextauth website.
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account }: { user: AuthUser; account: Account }) {
       if (account?.provider == "credentials") {
