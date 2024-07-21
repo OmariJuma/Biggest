@@ -4,7 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
-import prisma from "@/utils/db";
+// import prisma from "@/utils/db";
 import { nanoid } from "nanoid";
 
 const authOptions = {
@@ -19,20 +19,23 @@ const authOptions = {
       },
       async authorize(credentials: any) {
         try {
-          const user = await prisma.user.findFirst({
-            where: {
-              email: credentials.email,
-            },
-          });
-          if (user) {
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password!
-            );
-            if (isPasswordCorrect) {
+          const user =await credentials.email||"email@test.com";
+          // await prisma.user.findFirst({
+          //   where: {
+          //     email: credentials.email,
+          //   },
+          // });
+          // if (user) {
+          //   const isPasswordCorrect = await bcrypt.compare(
+          //     credentials.password,
+          //     user.password!
+          //   );
+          //   if (isPasswordCorrect) {
+          //     return user;
+          //   }
+          // }
               return user;
-            }
-          }
+
         } catch (err: any) {
           throw new Error(err);
         }
