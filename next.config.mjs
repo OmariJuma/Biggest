@@ -4,13 +4,14 @@ const nextConfig = {
         remotePatterns: [
           {
             protocol: 'https',
-            hostname: 'placehold.co',
-            port: ""
+            hostname: '**',
+            port: "",
+            pathname: '/**',
           },
           {
             protocol: 'http',
-            hostname: 'localhost',
-            port: '8080',
+            hostname: '**',
+            port: "",
             pathname: '/**',
           },
         ],

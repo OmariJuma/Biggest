@@ -12,7 +12,7 @@ const WishlistPage = () => {
   const {wishlist, setWishlist}= useWishlistStore();
 
   const getWishlistByUserId = async (id: string) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URI}/api/wishlist/${id}`, {
       cache: "no-store",
     });
     const wishlist = await response.json();
@@ -33,7 +33,7 @@ const WishlistPage = () => {
 
   const getUserByEmail = async () => {
     if (session?.user?.email) {
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`, {
+      fetch(`${process.env.BACKEND_URI}/api/users/email/${session?.user?.email}`, {
         cache: "no-store",
       })
         .then((response) => response.json())

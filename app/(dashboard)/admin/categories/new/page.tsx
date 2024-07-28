@@ -19,7 +19,7 @@ const DashboardNewCategoryPage = () => {
         }),
       };
       // sending API request for creating new cateogry
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`, requestOptions)
+      fetch(`${process.env.BACKEND_URI}/api/categories`, requestOptions)
         .then((response) => {
           if (response.status === 201) {
             return response.json();

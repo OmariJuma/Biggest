@@ -10,7 +10,7 @@ const DashboardCategory = () => {
 
   // getting all categories to be displayed on the all categories page
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`)
+    fetch(`${process.env.BACKEND_URI}/api/categories`)
       .then((res) => {
         return res.json();
       })

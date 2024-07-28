@@ -42,7 +42,7 @@ const LoginPage = () => {
     }
     try {
 
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${email}`, { password: password })
+      const res = await axios.post(`${process.env.BACKEND_URI}/api/users/email/${email}`, { password: password })
       console.log(res)
       if (res.data.error) {
         console.log(res.data.error)

@@ -52,7 +52,7 @@ const AdminSingleOrder = () => {
   useEffect(() => {
     const fetchOrderData = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/orders/${params?.id}`
+        `${process.env.BACKEND_URI}/api/orders/${params?.id}`
       );
       const data: Order = await response.json();
       setOrder(data);
@@ -60,7 +60,7 @@ const AdminSingleOrder = () => {
 
     const fetchOrderProducts = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/order-product/${params?.id}`
+        `${process.env.BACKEND_URI}/api/order-product/${params?.id}`
       );
       const data: OrderProduct[] = await response.json();
       setOrderProducts(data);
@@ -98,7 +98,7 @@ const AdminSingleOrder = () => {
         return;
       }
 
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/orders/${order?.id}`, {
+      fetch(`${process.env.BACKEND_URI}/api/orders/${order?.id}`, {
         method: "PUT", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -126,11 +126,11 @@ const AdminSingleOrder = () => {
     };
 
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/order-product/${order?.id}`,
+      `${process.env.BACKEND_URI}/api/order-product/${order?.id}`,
       requestOptions
     ).then((response) => {
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/orders/${order?.id}`,
+        `${process.env.BACKEND_URI}/api/orders/${order?.id}`,
         requestOptions
       ).then((response) => {
         toast.success("Order deleted successfully");
