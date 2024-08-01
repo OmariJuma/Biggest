@@ -48,7 +48,7 @@ const RegisterPage = () => {
 
     try {
       // sending API request for registering user
-      const res = await fetch("${process.env.BACKEND_URI}/api/users", {
+      const res = await fetch("${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const RegisterPage = () => {
         body: JSON.stringify({
           email,
           password,
-          role:"admin"
+          role:"user"
         }),
       });
 

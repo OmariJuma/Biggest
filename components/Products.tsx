@@ -45,7 +45,7 @@ const Products = ({ slug }: any) => {
       setLoading(true);
       try {
         const data = await axios(
-          `${process.env.BACKEND_URI}/api/products?filters[price][$lte]=${
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/products?filters[price][$lte]=${
             slug?.searchParams?.price || 1
           }&filters[rating][$gte]=${
             Number(slug?.searchParams?.rating) || 0

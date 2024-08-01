@@ -19,7 +19,7 @@ const DashboardNewCategoryPage = () => {
         }),
       };
       // sending API request for creating new cateogry
-      fetch(`${process.env.BACKEND_URI}/api/categories`, requestOptions)
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`, requestOptions)
         .then((response) => {
           if (response.status === 201) {
             return response.json();
@@ -64,7 +64,7 @@ const DashboardNewCategoryPage = () => {
         <div className="flex gap-x-2">
           <button
             type="button"
-            className="uppercase bg-blue-500 px-10 py-5 text-lg border border-black border-gray-300 font-bold text-white shadow-sm hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2"
+            className="uppercase bg-blue-500 px-10 py-5 text-lg border border-gray-300 font-bold text-white shadow-sm hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2"
             onClick={addNewCategory}
           >
             Create category

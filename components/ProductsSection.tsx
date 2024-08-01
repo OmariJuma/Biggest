@@ -15,7 +15,7 @@ import axios from "axios";
 
 const ProductsSection = async () => {
   // sending API request for getting all products
-  const response = await axios(`${process.env.BACKEND_URI}/api/products`);
+  const response = await axios(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/products`);
   const products = response.data;
   return (
     <div className="bg-blue-500 border-t-4 border-white">

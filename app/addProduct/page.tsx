@@ -76,7 +76,7 @@ function Page() {
 
     try {
       const { data } = await axios.post(
-        `${process.env.BACKEND_URI}/api/products`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/products`,
         formData,
         {
           headers: {

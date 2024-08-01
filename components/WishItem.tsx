@@ -43,7 +43,7 @@ const WishItem = ({
 
   const getUserByEmail = async () => {
     if (session?.user?.email) {
-      fetch(`${process.env.BACKEND_URI}/api/users/email/${session?.user?.email}`, {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`, {
         cache: "no-store",
       })
         .then((response) => response.json())
@@ -57,7 +57,7 @@ const WishItem = ({
     
     if (userId) {
 
-      fetch(`${process.env.BACKEND_URI}/api/wishlist/${userId}/${productId}`, {method: "DELETE"}).then(
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${userId}/${productId}`, {method: "DELETE"}).then(
         (response) => {
           removeFromWishlist(productId);
           toast.success("Item removed from your wishlist");
