@@ -42,7 +42,7 @@ const ProductTabs = ({ product }: { product: Product }) => {
       </div>
       <div className="pt-5">
         {currentProductTab === 0 && (
-          <p className="text-lg max-sm:text-base max-sm:text-sm">
+          <p className="text-lg max-sm:text-base">
             {product?.description}
           </p>
         )}

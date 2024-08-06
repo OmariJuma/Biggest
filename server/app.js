@@ -13,6 +13,7 @@ const wishlistRouter = require('./routes/wishlist');
 var bodyParser = require("body-parser")
 var cors = require("cors");
 const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
+const multer = require("multer");
 require('dotenv').config();
 
 const app = express();
@@ -39,10 +40,20 @@ app.use('/api/order-product', orderProductRouter);
 app.use("/api/slugs", slugRouter);
 app.use("/api/wishlist", wishlistRouter);
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    // Handle Multer-specific errors
+   return res.status(400).json({ error: err.message });
+  } else if (err) {
+    // Handle other errors
+   return res.status(500).json({ error: err.message });
+  } else {
+    next();
+  }
+});
+// app.use(errorHandlerMiddleware)
 
-app.use(errorHandlerMiddleware)
-
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 const start = async () => {
   try {
     app.listen(PORT, () => {

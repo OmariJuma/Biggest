@@ -1,4 +1,5 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
+const { uploadToCloudinary } = require("../middleware/imageUpload");
 const prisma = new PrismaClient();
 
 async function getAllProducts(request, response) {
@@ -262,7 +263,8 @@ async function createProduct(request, response) {
       subCategory,
       subCategoryId,
     } = request.body;
-    const mainImage = request.files[0].filename;
+    const mainImage = request.files[0].originalname;
+    console.log(request.files);
 
     const existingCategory = await prisma.category.findUnique({
       where: { name: category }, // Check for category by name
@@ -309,19 +311,35 @@ async function createProduct(request, response) {
           }
         }
       }
-
+      const folderName = `product_images/${createProduct.id}`
       const productImages = [];
-      for (let i = 1; i < request.files.length; i++) {
+      for (let i = 0; i < request.files.length; i++) {
+        const file = request.files[i];
+        const result = await uploadToCloudinary(file.buffer, folderName);
         const createdImage = await prisma.image.create({
           data: {
-            productID: await createdProduct.id, // Use await to ensure ID is available
-            image: request.files[i].filename,
+            productID: createdProduct.id,
+            image: result.secure_url, // Store Cloudinary URL
           },
         });
         productImages.push(createdImage);
       }
-
-      return response.status(201).json({ createdProduct, productImages });
+     let updatedMainImage;
+      try {
+      updatedMainImage= await prisma.product.update({
+          where: {
+            id: createdProduct.id,
+          },
+          data: {
+            mainImage: productImages[0].image,
+          },
+        });
+      
+      } catch (error) {
+        console.error("Error updating product with main image:", error);  
+        return response.status(500).json({"error":"Failed to update main image"})
+      }
+      return response.status(201).json({ updatedMainImage, productImages });
     } else {
       // Category not found, handle the case (e.g., error message, create new category)
       console.warn(`Category not found: ${category}`);

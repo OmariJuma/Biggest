@@ -26,7 +26,7 @@ const ProductItem = ({
         <img
           src={
             product.mainImage
-              ? `${process.env.NEXT_PUBLIC_BACKEND_URI}/public/${product.mainImage}`
+              ? `${product.mainImage}`
               : "/product_placeholder.jpg"
           }
           width="0"
@@ -59,7 +59,7 @@ const ProductItem = ({
       <ProductItemRating productRating={product?.rating} />
       <Link
         href={`/product/${product?.slug}`}
-        className="block flex justify-center items-center w-full uppercase bg-white px-0 py-2 text-base border border-black border-gray-300 font-bold text-blue-600 shadow-sm hover:bg-black hover:bg-gray-100 focus:outline-none focus:ring-2"
+        className="flex justify-center items-center w-full uppercase bg-white px-0 py-2 text-base border border-black border-gray-300 font-bold text-blue-600 shadow-sm hover:bg-black hover:bg-gray-100 focus:outline-none focus:ring-2"
       >
         <p>View product</p>
       </Link>
