@@ -1,5 +1,6 @@
 "use client";
 import { CustomButton, SectionTitle } from "@/components";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -48,17 +49,14 @@ const RegisterPage = () => {
 
     try {
       // sending API request for registering user
-      const res = await fetch("${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users`,
+        {
           email,
           password,
-          role:"user"
-        }),
-      });
+          role: "user",
+        }
+      );
 
       if (res.status === 400) {
         toast.error("This email is already registered");
