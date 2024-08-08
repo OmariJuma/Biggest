@@ -4,6 +4,8 @@ import { categoriessubCategories } from "@/lib/categoriesSubcategories";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import FileReadPreview from "@/components/FileReadPreview";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface Subcategory {
   id: number;
@@ -70,7 +72,6 @@ function Page() {
     formData.append("Location", location);
     formData.append("Condition", condition);
     images.forEach((image) => {
-      console.log(image);
       formData.append("images", image, image.name); // Append each image with its name
     });
 
@@ -85,9 +86,10 @@ function Page() {
           },
         }
       );
-      console.log(data);
+      toast.success("Product created successfully, redirecting...")
+      redirect("/")
     } catch (error) {
-      console.log(error);
+      toast.error("An error has occured please refresh and try again")
     }
   };
 

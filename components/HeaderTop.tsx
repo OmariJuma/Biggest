@@ -36,7 +36,7 @@ const HeaderTop = () => {
           </li>
           <li className="flex items-center gap-x-2 font-semibold">
             <FaRegEnvelope className="text-white text-xl" />
-            <span>biggestSupport@email.com</span>
+            <span>biggestSupport@gmail.com</span>
           </li>
         </ul>
         <ul className="flex items-center gap-x-5 h-full max-sm:text-sm max-sm:gap-x-2 font-semibold">

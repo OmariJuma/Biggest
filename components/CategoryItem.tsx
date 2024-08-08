@@ -21,7 +21,7 @@ interface CategoryItemProps {
 const CategoryItem = ({ title, image, href }: CategoryItemProps) => {
   return (
     <Link href={href}>
-      <div className="flex flex-col items-center gap-y-2 cursor-pointer bg-white py-5 text-black hover:bg-gray-100">
+      <div className="flex flex-col items-center gap-y-2 cursor-pointer bg-grey-200 py-5 text-black hover:bg-gray-100">
         <Image
           src={image}
           width={200}
