@@ -10,28 +10,34 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { type ReactNode } from "react";
+import React from "react";
 
 interface CategoryItemProps {
   title: string;
-  href: string;
+  href: string | null;
   image: string;
 }
 
 const CategoryItem = ({ title, image, href }: CategoryItemProps) => {
-  return (
+  const content = (
+    <div className="flex flex-col items-center gap-y-2 cursor-pointer bg-grey-200 py-5 text-black hover:bg-gray-100">
+      <Image
+        src={image}
+        width={200}
+        height={100}
+        alt={title}
+        style={{ aspectRatio: 1, objectFit: "cover" }}
+      />
+      <h3 className="font-semibold text-xl">{title}</h3>
+    </div>
+  );
+
+  return href ? (
     <Link href={href}>
-      <div className="flex flex-col items-center gap-y-2 cursor-pointer bg-grey-200 py-5 text-black hover:bg-gray-100">
-        <Image
-          src={image}
-          width={200}
-          height={100}
-          alt={title}
-          style={{ aspectRatio: 1, objectFit: "cover" }}
-        />
-        <h3 className="font-semibold text-xl">{title}</h3>
-      </div>
+      {content}
     </Link>
+  ) : (
+    content
   );
 };
 

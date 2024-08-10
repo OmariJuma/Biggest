@@ -1,73 +1,15 @@
-"use client"
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import { blue } from '@mui/material/colors';
-
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-
-export interface SimpleDialogProps {
-  open: boolean;
-  selectedValue: string;
-  onClose: (value: string) => void;
-}
-
-function SimpleDialog(props: SimpleDialogProps) {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value: string) => {
-    onClose(value);
-  };
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Set backup account</DialogTitle>
-      <List sx={{ pt: 0 }}>
-        {emails.map((email) => (
-          <ListItem disableGutters key={email}>
-            <ListItemButton onClick={() => handleListItemClick(email)}>
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                  Hi
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={email} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItem disableGutters>
-          <ListItemButton
-            autoFocus
-            onClick={() => handleListItemClick('addAccount')}
-          >
-            <ListItemAvatar>
-              <Avatar>
-               hh
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Add account" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Dialog>
-  );
-}
+"use client";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import Typography from "@mui/material/Typography";
+import { DialogActions, DialogContent } from "@mui/material";
+import { categoriessubCategories } from "@/lib/categoriesSubcategories";
+import CategoryItem from "./CategoryItem";
 
 export default function Modal() {
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -75,23 +17,39 @@ export default function Modal() {
 
   const handleClose = (value: string) => {
     setOpen(false);
-    setSelectedValue(value);
   };
 
   return (
     <div>
-      <Typography variant="subtitle1" component="div">
-        Selected: {selectedValue}
-      </Typography>
-      <br />
       <Button variant="outlined" onClick={handleClickOpen}>
         Open simple dialog
       </Button>
-      <SimpleDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-      />
+      <Dialog fullWidth={true} onClose={handleClose} open={open}>
+        <DialogTitle className="font-bold text-3xl">Set Your Interests</DialogTitle>
+        <DialogContent>
+        <div className="max-w-screen-2xl mx-auto py-10 gap-x-5 px-16 max-md:px-10 gap-y-5 grid grid-cols-3 max-lg:grid-cols-3 max-md:grid-cols-2 max-[450px]:grid-cols-1">
+
+          {categoriessubCategories.categories.map((item) => (
+            <CategoryItem
+              title={item.name}
+              key={item.id}
+              href={null}
+              image={item.image}
+            />
+          ))}
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <div style={{ textAlign: "right" }}>
+            <Button
+              variant="outlined"
+              className="text-white bg-red-500 mr-0 hover:bg-red-600"
+            >
+              Skip
+            </Button>
+          </div>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
