@@ -46,7 +46,7 @@ function ImageCarousel({ slideImages, mainImage }) {
 
 
   let imageArray = [
-    <Image
+    <img
       key="mainImage"
       src={`${mainImage}`}
       alt="Main Image"
@@ -61,7 +61,7 @@ function ImageCarousel({ slideImages, mainImage }) {
   slideImages.forEach((slide: { image: any; }, i: number) => {
     imageArray.push(
       <div key={`slide-${i}`}>
-        <Image
+        <img
           src={`${slide.image}`}
           alt={`Slide Image ${i + 1}`}
           className="w-full" // Tailwind classes for width and aspect ratio
@@ -84,11 +84,11 @@ function ImageCarousel({ slideImages, mainImage }) {
         responsive={responsive}
         ssr={true} // Server-side rendering enabled
         infinite={true}
-        autoPlay={deviceType !== 'mobile'} // AutoPlay enabled except for mobile devices
-        autoPlaySpeed={10000}
+        autoPlay={true} 
+        autoPlaySpeed={2000}
         keyBoardControl={true}
         customTransition="all .5"
-        transitionDuration={500}
+        transitionDuration={250}
         containerClass="carousel-container"
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
