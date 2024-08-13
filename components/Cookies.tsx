@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { cookies } from "next/headers";
 
 // Validate cookie name and value
@@ -32,30 +31,3 @@ export function getCookieValue(name) {
   return cookies().get(name);
 }
 
-function CookieBanner() {
-  const [showBanner, setShowBanner] = useState(true);
-
-  useEffect(() => {
-    const consent = cookies().get("cookieConsent");
-    if (String(consent) === "accepted") {
-      setShowBanner(false);
-    }
-  }, []);
-
-  const handleAcceptAll = () => {
-    // Set all cookies
-    setPersistentCookie("cookieConsent", "accepted");
-    setShowBanner(false);
-  };
-
-  return (
-    showBanner && (
-      <div>
-        <p>We use cookies to improve your experience. By using our site, you accept our use of cookies.</p>
-        <button onClick={handleAcceptAll}>Accept All</button>
-      </div>
-    )
-  );
-}
-
-export default CookieBanner;

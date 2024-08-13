@@ -6,6 +6,7 @@ import {
   Newsletter,
   ProductsSection,
 } from "@/components";
+import CookieBanner from "@/components/CookieBanner";
 import Modal from "@/components/Modal";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <CategoryMenu />
       {/* <Hero /> */}
       <Modal/>
+      <CookieBanner/>
       <ProductsSection />
     </>
   );
