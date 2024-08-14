@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,10 +12,20 @@ import {
 } from "@mui/material";
 import "@/app/globals.css"; // Import the CSS file
 import axios from "axios";
+import Modal from "./Modal";
 
-const CookieBanner = () => {
+const CookieBanner: React.FC = () => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
+  const [showPreferenceModal, setShowPreferenceModal] = useState<boolean>(false);
+
+  const onCloseHandler = useCallback(() => {
+    console.log(selected);
+    if (selected === "true") {
+      setShowPreferenceModal(true);
+    }
+    setShowBanner(false);
+  }, [selected]);
 
   useEffect(() => {
     const fetchCookieValue = async () => {
@@ -37,7 +47,7 @@ const CookieBanner = () => {
     fetchCookieValue();
   }, []);
 
-  const setCookiePreference = async (event: any) => {
+  const setCookiePreference = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -50,56 +60,62 @@ const CookieBanner = () => {
       if (!response?.data) {
         throw new Error("Failed to set cookie");
       }
-
+      if (selected === "true") {
+        setShowPreferenceModal(true);
+      }
       setShowBanner(false);
     } catch (error) {
       console.error("Error setting cookie:", error);
     }
-  };
+  }, [selected]);
+
   return (
-    <Dialog
-      open={showBanner}
-      onClose={() => setShowBanner(false)}
-      transitionDuration={{ enter: 500, exit: 500 }}
-    >
-      <DialogTitle className="text-center">Cookie Consent</DialogTitle>
-      <DialogContent>
-        <form
-          onSubmit={setCookiePreference}
-          className="flex flex-col justify-center items-center p-6 rounded-lg shadow-xl"
-        >
-          <p className="text-black text-center mb-4">
-            We use cookies to improve your experience. By using our site, you
-            accept our use of cookies.
-          </p>
-          <FormControl variant="outlined" className="mb-4 w-full">
-            <InputLabel htmlFor="consent" className="text-black">
-              Do you accept cookies?
-            </InputLabel>
-            <Select
-              name="consent"
-              id="consent"
-              defaultValue=""
-              className="p-2 rounded-md border text-black border-gray-300"
-              label="Do you accept cookies?"
-              onChange={(e) => setSelected(e.target.value)}
-            >
-              <MenuItem value="false">No</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={!selected}
-            className="mt-4 bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-700 transition duration-300"
+    <>
+      <Dialog
+        open={showBanner}
+        onClose={onCloseHandler}
+        transitionDuration={{ enter: 500, exit: 500 }}
+      >
+        <DialogTitle className="text-center">Cookie Consent</DialogTitle>
+        <DialogContent>
+          <form
+            onSubmit={setCookiePreference}
+            className="flex flex-col justify-center items-center p-6 rounded-lg shadow-xl"
           >
-            Submit
-          </Button>
-        </form>
-      </DialogContent>
-    </Dialog>
+            <p className="text-black text-center mb-4">
+              We use cookies to improve your experience. By using our site, you
+              accept our use of cookies.
+            </p>
+            <FormControl variant="outlined" className="mb-4 w-full">
+              <InputLabel htmlFor="consent" className="text-black">
+                Do you accept cookies?
+              </InputLabel>
+              <Select
+                name="consent"
+                id="consent"
+                defaultValue=""
+                className="p-2 rounded-md border text-black border-gray-300"
+                label="Do you accept cookies?"
+                onChange={(e) => setSelected(e.target.value)}
+              >
+                <MenuItem value="false">No</MenuItem>
+                <MenuItem value="true">Yes</MenuItem>
+              </Select>
+            </FormControl>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!selected}
+              className="mt-4 bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-700 transition duration-300"
+            >
+              Submit
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+      {showPreferenceModal && <Modal />}
+    </>
   );
 };
 
