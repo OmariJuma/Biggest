@@ -56,9 +56,6 @@ function Page() {
       }
     }
 
-    console.log("Category Name:", categoryName);
-    console.log("Subcategory Name:", subCategoryName);
-
     const formData: FormData = new FormData();
     formData.append("title", title || "");
     formData.append("units", units?.toString() || "");

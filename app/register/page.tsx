@@ -70,7 +70,6 @@ const RegisterPage = () => {
     } catch (error) {
       toast.error("Error, try again");
       setError("Error, try again");
-      console.log(error);
     }
   };
 

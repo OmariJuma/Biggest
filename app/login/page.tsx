@@ -43,9 +43,7 @@ const LoginPage = () => {
     try {
 
       const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${email}`, { password: password })
-      console.log(res)
       if (res.data.error) {
-        console.log(res.data.error)
         setError("Invalid email or password");
         toast.error(error);
         // if (res.request) router.replace("/");
@@ -65,7 +63,7 @@ const LoginPage = () => {
     }
 
     catch (error) {
-      console.log("an error has occured", error)
+      console.log("an error has occured")
     }
 
 

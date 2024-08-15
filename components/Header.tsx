@@ -35,31 +35,56 @@ const Header = () => {
 
   // getting all wishlist items by user id
   const getWishlistByUserId = async (id: string) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`, {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`,
+      {
+        cache: "no-cache",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
     const wishlist = await response.json();
     const productArray: {
       id: string;
       title: string;
       price: number;
       image: string;
-      slug:string
+      slug: string;
       stockAvailabillity: number;
     }[] = [];
-    
-    wishlist.map((item: any) => productArray.push({id: item?.product?.id, title: item?.product?.title, price: item?.product?.price, image: item?.product?.mainImage, slug: item?.product?.slug, stockAvailabillity: item?.product?.inStock}));
-    
+
+    wishlist.map((item: any) =>
+      productArray.push({
+        id: item?.product?.id,
+        title: item?.product?.title,
+        price: item?.product?.price,
+        image: item?.product?.mainImage,
+        slug: item?.product?.slug,
+        stockAvailabillity: item?.product?.inStock,
+      })
+    );
+
     setWishlist(productArray);
   };
 
   // getting user by email so I can get his user id
-  const getUserByEmail = async () => {
+  const getUser = async () => {
     if (session?.user?.email) {
-      
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`, {
-        cache: "no-store",
-      })
+      // fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`,
+
+      fetch(
+        `${
+          process.env.NEXT_PUBLIC_BACKEND_URI
+        }/api/users/${localStorage.getItem("id")}`,
+        {
+          cache: "default",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           getWishlistByUserId(data?.id);
@@ -68,8 +93,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-    getUserByEmail();
-  }, [session?.user?.email, wishlist.length]);
+    getUser();
+  }, [wishlist.length]);
 
   return (
     <header className="bg-white">
@@ -77,7 +102,13 @@ const Header = () => {
       {pathname.startsWith("/admin") === false && (
         <div className="h-auto bg-white flex items-center justify-between px-16 max-[1320px]:px-16 max-md:px-6 max-lg:flex-col max-lg:gap-y-7 max-lg:justify-center max-lg:h-60 max-w-screen-2xl mx-auto">
           <Link href="/">
-            <Image src="/logo v1.svg" width={300} height={300} alt="Biggest logo" className="relative right-5 max-[1023px]:w-56" />
+            <Image
+              src="/logo v1.svg"
+              width={300}
+              height={300}
+              alt="Biggest logo"
+              className="relative right-5 max-[1023px]:w-56"
+            />
           </Link>
           <SearchInput />
           <div className="flex gap-x-10">

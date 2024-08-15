@@ -2,20 +2,34 @@
 import { CustomButton, DashboardSidebar } from "@/components";
 import { nanoid } from "nanoid";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const DashboardUsers = () => {
+const DashboardUsers =  () => {
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect( () => {
     // sending API request for all users
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users`)
-      .then((res) => {
-        return res.json();
+    //         {
+      // headers: {
+      //   Authorization: `Bearer ${localStorage.getItem("token")}`,
+      // },
+
+    try {
+     const fetchUsers = async ()=>{
+     const get = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users`,{
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
       })
-      .then((data) => {
-        setUsers(data);
-      });
+      const data = get.json()
+       setUsers(await data)
+     }
+     fetchUsers()
+      
+    } catch (error) {
+      toast.error("Failed to fetch users",error)
+    }
   }, []);
 
   return (
@@ -53,7 +67,7 @@ const DashboardUsers = () => {
             <tbody>
               {/* row 1 */}
               {users &&
-                users.map((user) => (
+                users?.map((user) => (
                   <tr key={nanoid()}>
                     <th>
                       <label>

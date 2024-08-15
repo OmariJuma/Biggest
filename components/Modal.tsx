@@ -12,6 +12,7 @@ import {
 import { categoriessubCategories } from "@/lib/categoriesSubcategories";
 import CategoryItem from "./CategoryItem";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Modal() {
   const [open, setOpen] = React.useState(true);
@@ -20,13 +21,13 @@ export default function Modal() {
   const handleClose = async () => {
     try {
       console.log(selectedValues);
-      const response = await axios.post("/api/setCookie", {
+      await axios.post("/api/setCookie", {
         name: "interests",
         value: JSON.stringify(selectedValues), // Serialize the array
       });
-      console.log(response.data);
+      toast.success("Interests set successfully");
     } catch (error) {
-      console.error("Error setting cookie:", error);
+      toast.error("Error setting cookie");
     }
     setOpen(false);
   };

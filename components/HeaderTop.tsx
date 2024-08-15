@@ -10,9 +10,10 @@
 
 "use client";
 import { useUserStore } from "@/app/_zustand/userInfo";
+import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaHeadphones } from "react-icons/fa6";
 import { FaRegEnvelope } from "react-icons/fa6";
@@ -20,7 +21,30 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa6";
 
 const HeaderTop = () => {
-  const {id, email, clearUserInfo } = useUserStore();
+  const {id, token, email, clearUserInfo, setUserInfo } = useUserStore();
+  useEffect(()=>{
+    if(!email && token &&id ){
+      const execute = async () => {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setUserInfo(data)
+      }
+     try {
+       execute()
+     } catch (error) {
+        console.log(error)
+      
+     }
+    }
+  }
+  
+  ,[])
 
   const handleLogout = () => {
     clearUserInfo();

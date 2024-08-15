@@ -19,12 +19,12 @@ type user = {
 };
 
 export const useUserStore = create<user>((set) => ({
-  id: undefined,
+  id: localStorage.getItem("id") ?? undefined,
   email: undefined,
   firstName: undefined,
   secondName: undefined,
   role: undefined,
-  token: undefined,
+  token: localStorage.getItem("token") ?? undefined,
   clearUserInfo: () =>
     set({
       id: undefined,

@@ -17,10 +17,10 @@ import Modal from "./Modal";
 const CookieBanner: React.FC = () => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
-  const [showPreferenceModal, setShowPreferenceModal] = useState<boolean>(false);
+  const [showPreferenceModal, setShowPreferenceModal] =
+    useState<boolean>(false);
 
   const onCloseHandler = useCallback(() => {
-    console.log(selected);
     if (selected === "true") {
       setShowPreferenceModal(true);
     }
@@ -43,31 +43,46 @@ const CookieBanner: React.FC = () => {
         console.error("Error fetching cookie value:", error);
       }
     };
-
+    const interest = async () => {
+      const response = await fetch("/api/getCookie?name=interests");
+      if (response.status === 404) {
+        return;
+      }
+      const data = await response.json();
+      let parsedData;
+      try {
+        parsedData = JSON.parse(data);
+      } catch (error) {
+        parsedData = data;
+      }
+    };
     fetchCookieValue();
+    interest();
   }, []);
 
-  const setCookiePreference = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const setCookiePreference = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    try {
-      console.log(selected);
-      const response = await axios.post("/api/setCookie", {
-        name: "cookieConsent",
-        value: selected,
-      });
+      try {
+        const response = await axios.post("/api/setCookie", {
+          name: "cookieConsent",
+          value: selected,
+        });
 
-      if (!response?.data) {
-        throw new Error("Failed to set cookie");
+        if (!response?.data) {
+          throw new Error("Failed to set cookie");
+        }
+        if (selected === "true") {
+          setShowPreferenceModal(true);
+        }
+        setShowBanner(false);
+      } catch (error) {
+        console.error("Error setting cookie:", error);
       }
-      if (selected === "true") {
-        setShowPreferenceModal(true);
-      }
-      setShowBanner(false);
-    } catch (error) {
-      console.error("Error setting cookie:", error);
-    }
-  }, [selected]);
+    },
+    [selected]
+  );
 
   return (
     <>
