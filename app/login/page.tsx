@@ -2,28 +2,29 @@
 import { CustomButton, SectionTitle } from "@/components";
 import { isValidEmailAddressFormat } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import axios from "axios"
+import axios from "axios";
 import { useUserStore } from "../_zustand/userInfo";
 
 type user = {
-  id: string | undefined,
-  email: string | undefined,
-  role: string | undefined,
-  firstName: string | undefined,
-  secondName: string | undefined,
-}
+  id: string | undefined;
+  email: string | undefined;
+  role: string | undefined;
+  firstName: string | undefined;
+  secondName: string | undefined;
+};
 const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUserInfo } = useUserStore()
+  const { setUserInfo } = useUserStore();
   const { data: session, status: sessionStatus } = useSession();
-
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // setEmail(e.target[0].value);
@@ -41,36 +42,57 @@ const LoginPage = () => {
       return;
     }
     try {
-
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${email}`, { password: password })
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${email}`,
+        { password: password }
+      );
       if (res.data.error) {
         setError("Invalid email or password");
         toast.error(error);
         // if (res.request) router.replace("/");
       } else {
-        const { token, id, email, firstName, secondName, role } = res.data
+        const { token, id, email, firstName, secondName, role } = res.data;
         setError("");
         toast.success("Successful login");
-        const info = { id, }
+        const info = { id };
         setUserInfo({
-          id, firstName, secondName, email, role, token
-        })
-        
-        localStorage.setItem("token", token)
-        localStorage.setItem("id", id)
-        router.replace("/")
+          id,
+          firstName,
+          secondName,
+          email,
+          role,
+          token,
+        });
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("id", id);
+        const setTokenCookie = async () => {
+          try {
+            console.log("setting cookie")
+            const { data } = await axios.post(`/api/setCookie`, {
+              name:"token",
+              value: localStorage.getItem("token"),
+            });
+            console.log(data);
+          } catch (error) {
+            console.log("Error setting cookie");
+          }
+        };
+        setTokenCookie();
+        if (role === "admin") {
+          router.replace("/dashboard");
+        } else {
+          router.replace("/");
+        }
       }
+    } catch (error) {
+      console.log("an error has occured");
     }
-
-    catch (error) {
-      console.log("an error has occured")
-    }
-
 
     if (sessionStatus === "loading") {
       return <h1>Loading...</h1>;
     }
-  }
+  };
   return (
     <div className="bg-white">
       <SectionTitle title="Login" path="Home | Login" />
@@ -96,7 +118,7 @@ const LoginPage = () => {
                     id="email"
                     name="email"
                     type="email"
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -117,7 +139,7 @@ const LoginPage = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    onChange={(e)=> setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />

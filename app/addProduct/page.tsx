@@ -2,10 +2,11 @@
 import { CustomButton, SectionTitle } from "@/components";
 import { categoriessubCategories } from "@/lib/categoriesSubcategories";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import FileReadPreview from "@/components/FileReadPreview";
-import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
+import { useUserStore } from "../_zustand/userInfo";
+import { redirect, useRouter } from "next/navigation";
 
 interface Subcategory {
   id: number;
@@ -26,6 +27,8 @@ function Page() {
     Subcategory[]
   >([]);
 
+  const router = useRouter();
+  const { id } = useUserStore()
   useEffect(() => {
     const filteredCategory = categoriessubCategories.categories.find(
       (category) => category.id === categoryId

@@ -22,30 +22,39 @@ import HeartElement from "./HeartElement";
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useWishlistStore } from "@/app/_zustand/wishlistStore";
+import { useUserStore } from "@/app/_zustand/userInfo";
+import axios from "axios";
 
 const Header = () => {
-  const { data: session, status } = useSession();
   const pathname = usePathname();
   const { wishlist, setWishlist, wishQuantity } = useWishlistStore();
-
+  const { id } = useUserStore();
+  const clearUserInfo = useUserStore((state) => state.clearUserInfo);
   const handleLogout = () => {
-    setTimeout(() => signOut(), 1000);
-    toast.success("Logout successful!");
+    try {
+      localStorage.removeItem("id");
+      localStorage.removeItem("token");
+      localStorage.clear();
+      clearUserInfo();
+      toast.success("Logout successful!");
+      console.log("Local storage cleared and user info reset.");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      toast.error("Logout failed. Please try again.");
+    }
   };
-
-  // getting all wishlist items by user id
+    // getting all wishlist items by user id
   const getWishlistByUserId = async (id: string) => {
-    const response = await fetch(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`,
       {
-        cache: "no-cache",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
 
-    const wishlist = await response.json();
+    const wishlist = await response.data;
     const productArray: {
       id: string;
       title: string;
@@ -71,7 +80,7 @@ const Header = () => {
 
   // getting user by email so I can get his user id
   const getUser = async () => {
-    if (session?.user?.email) {
+    if (id) {
       // fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`,
 
       fetch(
