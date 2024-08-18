@@ -23,8 +23,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const { setUserInfo } = useUserStore();
   const { data: session, status: sessionStatus } = useSession();
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // setEmail(e.target[0].value);
@@ -51,10 +49,10 @@ const LoginPage = () => {
         toast.error(error);
         // if (res.request) router.replace("/");
       } else {
-        const { token, id, email, firstName, secondName, role } = res.data;
-        setError("");
+        const { token, id, email, firstName, secondName, role, expiry } =
+          res.data;
+        console.log(res.data.role);
         toast.success("Successful login");
-        const info = { id };
         setUserInfo({
           id,
           firstName,
@@ -68,22 +66,23 @@ const LoginPage = () => {
         localStorage.setItem("id", id);
         const setTokenCookie = async () => {
           try {
-            console.log("setting cookie")
-            const { data } = await axios.post(`/api/setCookie`, {
-              name:"token",
-              value: localStorage.getItem("token"),
+            console.log("setting cookie");
+            const { data } = await axios.post(`/api/setShortLifeCookie`, {
+              name: "token",
+              value: token,
+              time: expiry,
             });
             console.log(data);
+            if (role == "admin") {
+              router.replace("/admin");
+            } else {
+              router.replace("/");
+            }
           } catch (error) {
             console.log("Error setting cookie");
           }
         };
-        setTokenCookie();
-        if (role === "admin") {
-          router.replace("/dashboard");
-        } else {
-          router.replace("/");
-        }
+        setTokenCookie()
       }
     } catch (error) {
       console.log("an error has occured");

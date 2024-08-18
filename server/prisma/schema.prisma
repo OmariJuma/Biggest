@@ -42,7 +42,10 @@ model Image {
 model User {
   id       String     @id @default(uuid())
   email    String     @unique
-  password String?
+  password String
+  firstName String    @default("null")
+  secondName String   @default("null")
+  phoneNo String       @default("null")
   role     String?    @default("user")
   Wishlist Wishlist[]
 }

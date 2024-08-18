@@ -1,49 +1,48 @@
-// *********************
-// Role of the component: Header component
-// Name of the component: Header.tsx
-// Developer: Aleksandar Kuzmanovic
-// Version: 1.0
-// Component call: <Header />
-// Input parameters: no input parameters
-// Output: Header component
-// *********************
-
 "use client";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import HeaderTop from "./HeaderTop";
 import Image from "next/image";
 import SearchInput from "./SearchInput";
 import Link from "next/link";
 import { FaBell } from "react-icons/fa6";
-
+import { RxHamburgerMenu } from "react-icons/rx";
 import CartElement from "./CartElement";
 import HeartElement from "./HeartElement";
-import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useWishlistStore } from "@/app/_zustand/wishlistStore";
 import { useUserStore } from "@/app/_zustand/userInfo";
 import axios from "axios";
+import { removeCookie } from "@/lib/removeCookie";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const pathname = usePathname();
   const { wishlist, setWishlist, wishQuantity } = useWishlistStore();
-  const { id } = useUserStore();
+  const [id, setId] = useState<string | null>(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const clearUserInfo = useUserStore((state) => state.clearUserInfo);
+  const router = useRouter();
+
+  useEffect(() => {
+    setId(localStorage?.getItem("id"));
+  }, []);
+
   const handleLogout = () => {
     try {
       localStorage.removeItem("id");
       localStorage.removeItem("token");
-      localStorage.clear();
+      removeCookie("token");
       clearUserInfo();
       toast.success("Logout successful!");
       console.log("Local storage cleared and user info reset.");
+      router.replace("/");
     } catch (error) {
       console.error("Error during logout:", error);
       toast.error("Logout failed. Please try again.");
     }
   };
-    // getting all wishlist items by user id
+
   const getWishlistByUserId = async (id: string) => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`,
@@ -78,15 +77,10 @@ const Header = () => {
     setWishlist(productArray);
   };
 
-  // getting user by email so I can get his user id
   const getUser = async () => {
     if (id) {
-      // fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/email/${session?.user?.email}`,
-
       fetch(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND_URI
-        }/api/users/${localStorage.getItem("id")}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${localStorage.getItem("id")}`,
         {
           cache: "default",
           headers: {
@@ -103,7 +97,7 @@ const Header = () => {
 
   useEffect(() => {
     getUser();
-  }, [wishlist.length]);
+  }, [wishlist.length, id]);
 
   return (
     <header className="bg-white">
@@ -139,30 +133,34 @@ const Header = () => {
           </Link>
           <div className="flex gap-x-5 items-center">
             <FaBell className="text-xl" />
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="w-10">
-                <Image
-                  src="/randomuser.jpg"
-                  alt="random profile photo"
+            <div className="relative">
+              <div
+                tabIndex={0}
+                role="button"
+                className="w-10"
+                onClick={() => setDropdownVisible(!dropdownVisible)}
+              >
+                <RxHamburgerMenu
                   width={30}
                   height={30}
-                  className="w-full h-full rounded-full"
+                  className="w-full h-full text-xl"
                 />
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link href="/admin">Dashboard</Link>
-                </li>
-                <li>
-                  <a>Profile</a>
-                </li>
-                <li onClick={handleLogout}>
-                  <a href="#">Logout</a>
-                </li>
-              </ul>
+              {dropdownVisible && (
+                <ul
+                  className="absolute right-0 mt-2 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <Link href="/admin">Dashboard</Link>
+                  </li>
+                  <li>
+                    <a>Profile</a>
+                  </li>
+                  <li onClick={handleLogout}>
+                    <a href="#">Logout</a>
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </div>

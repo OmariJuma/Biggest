@@ -1,4 +1,4 @@
-const { PrismaClient,Prisma } = require("@prisma/client");
+const { PrismaClient, Prisma } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
 const { StatusCodes } = require("http-status-codes");
@@ -15,7 +15,8 @@ async function getAllUsers(request, response) {
 
 async function createUser(request, response) {
   try {
-    const { email, password, role } = request.body;
+    const { email, password, role, firstName, secondName, phoneNo } =
+      request.body;
     const hashedPassword = await bcrypt.hash(password, 5);
 
     const user = await prisma.user.create({
@@ -23,6 +24,9 @@ async function createUser(request, response) {
         email,
         password: hashedPassword,
         role,
+        firstName,
+        secondName,
+        phoneNo,
       },
     });
     return response.status(200).json(user);
@@ -115,19 +119,21 @@ async function getUserByEmail(request, response) {
         return response.status(404).json({ error: "User not found" });
       }
       const isMatch = await bcrypt.compare(password, user.password);
-      console.log(isMatch);
       if (isMatch) {
         const { id, email, role } = user;
         const token = await jwt.sign({ id }, process.env.JWT_SECRET, {
-          expiresIn: "1d",
+          expiresIn: "30d",
         });
         if (!token) {
           return response
             .status(500)
             .json({ error: "Something wrong has happened, please try again" });
         }
-
-        return response.status(200).json({ id, email, role, token });
+        const expiry = (token.verify = await jwt.verify(
+          token,
+          process.env.JWT_SECRET
+        ).exp);
+        return response.status(200).json({ id, email, role, token, expiry });
       }
       return response
         .status(404)

@@ -2,7 +2,6 @@
 import { CustomButton, SectionTitle } from "@/components";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +12,7 @@ const RegisterPage = () => {
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-    // chechking if user has already registered redirect to home page
+    // checking if user has already registered redirect to home page
     if (sessionStatus === "authenticated") {
       router.replace("/");
     }
@@ -23,11 +22,38 @@ const RegisterPage = () => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   };
+
+  const isValidPhoneNo = (phoneNo: string) => {
+    const phoneNoRegex = /^\d{12}$/; // Example validation for a 10-digit phone number
+    return phoneNoRegex.test(phoneNo);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const email = e.target[2].value;
-    const password = e.target[3].value;
-    const confirmPassword = e.target[4].value;
+    const firstName = e.target[0].value;
+    const secondName = e.target[1].value;
+    const phoneNo = e.target[2].value;
+    const email = e.target[3].value;
+    const password = e.target[4].value;
+    const confirmPassword = e.target[5].value;
+
+    if (!firstName) {
+      setError("First name is required");
+      toast.error("First name is required");
+      return;
+    }
+
+    if (!secondName) {
+      setError("Second name is required");
+      toast.error("Second name is required");
+      return;
+    }
+
+    if (!isValidPhoneNo(phoneNo)) {
+      setError("Phone number is invalid");
+      toast.error("Phone number is invalid");
+      return;
+    }
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -52,6 +78,9 @@ const RegisterPage = () => {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users`,
         {
+          firstName,
+          secondName,
+          phoneNo,
           email,
           password,
           role: "user",
@@ -91,15 +120,15 @@ const RegisterPage = () => {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
-                  htmlFor="name"
+                  htmlFor="firstName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Name
+                  First Name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="name"
-                    name="name"
+                    id="firstName"
+                    name="firstName"
                     type="text"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -109,15 +138,33 @@ const RegisterPage = () => {
 
               <div>
                 <label
-                  htmlFor="lastname"
+                  htmlFor="secondName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Lastname
+                  Second Name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="lastname"
-                    name="lastname"
+                    id="secondName"
+                    name="secondName"
+                    type="text"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="phoneNo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Phone Number <span className="text-gray-400">(don't forget country code)</span>
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="phoneNo"
+                    name="phoneNo"
                     type="text"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

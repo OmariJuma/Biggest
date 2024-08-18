@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { useUserStore } from "./app/_zustand/userInfo";
+import { cookies } from "next/headers";
 
 // This function can be marked async if using await inside
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token'); 
+  const token = cookies().get("token"); 
   console.log("Middleware running");
   console.log(token);
   // Check if the request URL matches the specified paths
