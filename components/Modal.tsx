@@ -21,7 +21,7 @@ export default function Modal() {
   const handleClose = async () => {
     try {
       console.log(selectedValues);
-      await axios.post("/api/setCookie", {
+      await axios.post("/api/setOneYearCookie", {
         name: "interests",
         value: JSON.stringify(selectedValues), // Serialize the array
       });

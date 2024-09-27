@@ -13,6 +13,7 @@ import {
 import "@/app/globals.css"; // Import the CSS file
 import axios from "axios";
 import Modal from "./Modal";
+import toast from "react-hot-toast";
 
 const CookieBanner: React.FC = () => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
@@ -65,7 +66,7 @@ const CookieBanner: React.FC = () => {
       event.preventDefault();
 
       try {
-        const response = await axios.post("/api/setCookie", {
+        const response = await axios.post("/api/setOneYearCookie", {
           name: "cookieConsent",
           value: selected,
         });
@@ -78,7 +79,7 @@ const CookieBanner: React.FC = () => {
         }
         setShowBanner(false);
       } catch (error) {
-        console.error("Error setting cookie:", error);
+        toast.error("Error setting cookie");
       }
     },
     [selected]

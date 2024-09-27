@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { useUserStore } from "../_zustand/userInfo";
+import Link from "next/link";
 
 type user = {
   id: string | undefined;
@@ -193,13 +194,14 @@ const LoginPage = () => {
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
                   <span className="bg-white px-6 text-gray-900">
-                    Or continue with
+                    Or
                   </span>
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <button
+              <div className="mt-6 grid gap-4 flex-auto">
+                <Link href={'/register'} className="bg-sky-600 border-4 text-white text-center text-xl hover:bg-sky-800">Create new account</Link>
+                {/* <button
                   className="flex w-full items-center border border-gray-300 justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   onClick={() => {
                     signIn("google");
@@ -232,7 +234,7 @@ const LoginPage = () => {
                   <span className="text-sm font-semibold leading-6">
                     GitHub
                   </span>
-                </button>
+                </button> */}
               </div>
               <p className="text-red-600 text-center text-[16px] my-4">
                 {error && error}

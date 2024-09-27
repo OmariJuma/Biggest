@@ -97,6 +97,8 @@ export default function FileReadPreview({ images, setImages }) {
         <Image
           src={image.preview}
           style={img}
+          width={100}
+          height={100}
           // Revoke data uri after image is loaded
           onLoad={() => {
             URL.revokeObjectURL(image.preview);

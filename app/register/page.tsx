@@ -159,7 +159,7 @@ const RegisterPage = () => {
                   htmlFor="phoneNo"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Phone Number <span className="text-gray-400">(don't forget country code)</span>
+                  Phone Number <span className="text-gray-400">(don't forget country code and no <strong>+</strong>)</span>
                 </label>
                 <div className="mt-2">
                   <input
