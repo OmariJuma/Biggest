@@ -4,12 +4,16 @@ CREATE TABLE `Product` (
     `slug` VARCHAR(191) NOT NULL,
     `title` VARCHAR(191) NOT NULL,
     `mainImage` VARCHAR(191) NOT NULL,
+    `Condition` VARCHAR(191) NOT NULL,
+    `Location` VARCHAR(191) NOT NULL,
     `price` INTEGER NOT NULL DEFAULT 0,
     `rating` INTEGER NOT NULL DEFAULT 0,
     `description` VARCHAR(191) NOT NULL,
     `manufacturer` VARCHAR(191) NOT NULL,
     `inStock` INTEGER NOT NULL DEFAULT 1,
     `categoryId` VARCHAR(191) NOT NULL,
+    `subCategory` VARCHAR(191) NOT NULL,
+    `subCategoryId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Product_slug_key`(`slug`),
     PRIMARY KEY (`id`)
@@ -28,7 +32,10 @@ CREATE TABLE `Image` (
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `firstName` VARCHAR(191) NOT NULL DEFAULT 'null',
+    `secondName` VARCHAR(191) NOT NULL DEFAULT 'null',
+    `phoneNo` VARCHAR(191) NOT NULL DEFAULT 'null',
     `role` VARCHAR(191) NULL DEFAULT 'user',
 
     UNIQUE INDEX `User_email_key`(`email`),
