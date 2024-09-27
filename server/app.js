@@ -19,9 +19,13 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? ["https://www.biggest.com.ng", "*"]
+  : ["http://localhost:3000", "http://localhost:3001", "*"];
+
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     // allowedHeaders: ["Content-Type", "Authorization"],
   })
