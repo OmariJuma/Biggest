@@ -3,18 +3,19 @@ import { redirect, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import HeaderTop from "./HeaderTop";
 import Image from "next/image";
-import SearchInput from "./SearchInput";
+import SearchInput from "../../SearchInput";
 import Link from "next/link";
 import { FaBell } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
-import CartElement from "./CartElement";
-import HeartElement from "./HeartElement";
+import CartElement from "../../CartElement";
+import HeartElement from "../../HeartElement";
 import toast from "react-hot-toast";
 import { useWishlistStore } from "@/app/_zustand/wishlistStore";
 import { useUserStore } from "@/app/_zustand/userInfo";
 import axios from "axios";
 import { removeCookie } from "@/lib/removeCookie";
 import { useRouter } from "next/navigation";
+import { apiClient } from "@/utils/client";
 
 const Header = () => {
  const pathname = usePathname();
@@ -44,14 +45,7 @@ const Header = () => {
  };
 
  const getWishlistByUserId = async (id: string) => {
-  const response = await axios.get(
-   `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/wishlist/${id}`,
-   {
-    headers: {
-     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-   }
-  );
+  const response = await apiClient.get("/wishlist/${id}");
 
   const wishlist = await response.data;
   const productArray: {
@@ -79,21 +73,11 @@ const Header = () => {
 
  const getUser = async () => {
   if (id) {
-   fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/${localStorage.getItem(
-     "id"
-    )}`,
-    {
-     cache: "default",
-     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-     },
-    }
-   )
-    .then((response) => response.json())
-    .then((data) => {
-     getWishlistByUserId(data?.id);
-    });
+   const response = await apiClient.get(`/users/${localStorage.getItem("id")}`);
+
+   if (response.data) {
+    getWishlistByUserId(response.data?.id);
+   }
   }
  };
 
@@ -105,7 +89,7 @@ const Header = () => {
   <header className="bg-white">
    <HeaderTop />
    {pathname.startsWith("/admin") === false && (
-    <div className=" h-auto bg-white flex items-center justify-between px-16 max-[1320px]:px-16 max-md:px-6 max-lg:flex-col max-lg:gap-y-7 max-lg:justify-center max-lg:h-60 max-w-screen-2xl mx-auto">
+    <div className="h-auto bg-white flex flex-col sm:flex-row gap-2 py-1 sm:py-4  items-center justify-between max-[1320px]:px-16 max-md:px-6 max-lg:flex-col max-lg:gap-y-7 max-lg:justify-center max-lg:h-60 max-w-screen-2xl mx-auto ">
      <Link href="/">
       <Image
        src="/logo v1.svg"
@@ -115,10 +99,13 @@ const Header = () => {
        className="relative z-0 right-5 max-[1023px]:w-56"
       />
      </Link>
-     <SearchInput />
-     <div className="flex gap-x-10">
-      <HeartElement wishQuantity={wishQuantity} />
-      <CartElement />
+
+     <div className="flex-1 flex flex-col sm:flex-row gap-8 items-center">
+      <SearchInput />
+      <div className="flex flex-row gap-x-10">
+       <HeartElement wishQuantity={wishQuantity} />
+       <CartElement />
+      </div>
      </div>
     </div>
    )}

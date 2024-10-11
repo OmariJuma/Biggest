@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { FaHeadphones, FaRegEnvelope } from "react-icons/fa6";
-import UserMenuButton from "./molecules/UserMenuButton";
+import UserMenuButton from "../../molecules/UserMenuButton";
 
 const HeaderTop = () => {
  return (

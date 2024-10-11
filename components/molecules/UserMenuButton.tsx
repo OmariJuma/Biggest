@@ -105,21 +105,31 @@ export default function UserMenuButton() {
      tabIndex={0}
      className="menu menu-sm dropdown-content text-left bg-blue-500 rounded-box z-[1] mt-3 p-2 shadow"
     >
-     <li className="flex items-center ">
-      <Link href="/login" className=" font-semibold">
-       <span>Login</span>
-      </Link>
-     </li>
-     <li className="flex items-center">
-      <Link href="/register" className=" font-semibold">
-       <span>Register</span>
-      </Link>
-     </li>
-     <li className="flex items-center">
-      <button onClick={handleLogout} className=" font-semibold">
-       <span>Log out</span>
-      </button>
-     </li>
+     {!storeId || !email ? (
+      <>
+       <li className="flex items-center ">
+        <Link href="/login" className=" font-semibold">
+         <span>Login</span>
+        </Link>
+       </li>
+       <li className="flex items-center">
+        <Link href="/register" className=" font-semibold">
+         <span>Register</span>
+        </Link>
+       </li>
+      </>
+     ) : (
+      <>
+       <span className="ml-10 text-base">{email}</span>
+       {pathname.startsWith("/admin") === false && (
+        <li className="flex items-center">
+         <button onClick={handleLogout} className=" font-semibold">
+          <span>Log out</span>
+         </button>
+        </li>
+       )}
+      </>
+     )}
     </ul>
    </div>
   </>
