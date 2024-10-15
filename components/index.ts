@@ -1,5 +1,5 @@
-export { default as Header } from "./Header";
-export { default as HeaderTop } from "./HeaderTop";
+export { default as Header } from "./organisms/header/Header";
+export { default as HeaderTop } from "./organisms/header/HeaderTop";
 export { default as SearchInput } from "./SearchInput";
 export { default as SimpleSlider } from "./SimpleSlider";
 export { default as CategoryItem } from "./CategoryItem";
@@ -36,7 +36,7 @@ export { default as WishItem } from "./WishItem";
 export { default as SectionTitle } from "./SectionTitle";
 export { default as HeartElement } from "./HeartElement";
 export { default as AddToWishlistBtn } from "./AddToWishlistBtn";
-export { default as Hero } from "./Hero"; 
+export { default as Hero } from "./Hero";
 export { default as IntroducingSection } from "./IntroducingSection";
 export { default as Heading } from "./Heading";
 export { default as DashboardSidebar } from "./DashboardSidebar";
