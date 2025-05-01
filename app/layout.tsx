@@ -28,16 +28,19 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className={inter.className}>
-      <SessionProvider session={session}>
-        <Header />
-        <Providers>
-        {children}
-        <div id="chat-widget-container"></div>
-        <Script src="/chat-widget.js" strategy="afterInteractive" />
-        </Providers>
-        <Footer />
-      </SessionProvider>
-        </body>
+        <SessionProvider session={session}>
+          <Header />
+          <Providers>
+            {children}
+            <Script id="chat-widget-env" strategy="beforeInteractive">
+              {`window.NEXT_PUBLIC_CHATBOT_URI = "${process.env.NEXT_PUBLIC_CHATBOT_URI}";`}
+            </Script>
+            <div id="chat-widget-container"></div>
+            <Script src="/chat-widget.js" strategy="afterInteractive" />
+          </Providers>
+          <Footer />
+        </SessionProvider>
+      </body>
     </html>
   );
 }
