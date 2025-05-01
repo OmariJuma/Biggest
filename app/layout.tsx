@@ -6,6 +6,7 @@ import SessionProvider from "@/utils/SessionProvider";
 import Providers from "@/Providers";
 import { getServerSession } from "next-auth";
 import 'svgmap/dist/svgMap.min.css';
+import Script from "next/script";
 
 
 
@@ -31,6 +32,8 @@ export default async function RootLayout({
         <Header />
         <Providers>
         {children}
+        <div id="chat-widget-container"></div>
+        <Script src="/chat-widget.js" strategy="afterInteractive" />
         </Providers>
         <Footer />
       </SessionProvider>
