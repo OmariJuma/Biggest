@@ -146,7 +146,7 @@
         appendMessage('You', text);
         chatInput.value = '';
 
-        fetch(process.env.NEXT_PUBLIC_CHATBOT_URI, {
+        fetch(`${process.env.NEXT_PUBLIC_CHATBOT_URI}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
