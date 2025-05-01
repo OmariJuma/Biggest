@@ -32,9 +32,6 @@ export default async function RootLayout({
           <Header />
           <Providers>
             {children}
-            <Script id="chat-widget-env" strategy="beforeInteractive">
-              {`window.NEXT_PUBLIC_CHATBOT_URI = "${process.env.NEXT_PUBLIC_CHATBOT_URI}";`}
-            </Script>
             <div id="chat-widget-container"></div>
             <Script src="/chat-widget.js" strategy="afterInteractive" />
           </Providers>

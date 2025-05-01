@@ -146,7 +146,7 @@
         appendMessage('You', text);
         chatInput.value = '';
 
-        fetch(`${window.NEXT_PUBLIC_CHATBOT_URI}`, {
+        fetch("https://shoppingassistant-production.up.railway.app/chat", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
