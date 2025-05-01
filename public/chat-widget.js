@@ -146,7 +146,7 @@
         appendMessage('You', text);
         chatInput.value = '';
 
-        fetch('http://localhost:5000/chat', {
+        fetch(process.env.CHATBOT_URI, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
