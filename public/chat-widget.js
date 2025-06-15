@@ -146,7 +146,7 @@
         appendMessage('You', text);
         chatInput.value = '';
 
-        fetch("https://shoppingassistant-production.up.railway.app/chat", {
+        fetch("https://shoppingassistant-bt2u.onrender.com/chat", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
